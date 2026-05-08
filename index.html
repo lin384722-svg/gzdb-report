@@ -39,7 +39,6 @@ tbody tr:last-child td{border-bottom:none;}
 .ch-badge{font-size:10px;font-weight:600;background:rgba(255,255,255,.7);padding:2px 5px;border-radius:10px;color:#333;}
 .badge-alert{background:#fde8e8!important;color:#c62828!important;}
 .ch-dot{display:inline-block;width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-.col-inf-name{width:35%;}.col-inf-num{width:10%;}.col-inf-pct{width:14%;}
 .mobile-hide{display:none;}
 .mobile-only{display:block;}
 .desktop-only{display:none;}
@@ -47,11 +46,10 @@ tbody tr:last-child td{border-bottom:none;}
   .mobile-hide{display:table-cell;}
   .mobile-only{display:none!important;}
   .desktop-only{display:block!important;}
-  .col-inf-name{width:30%;}.col-inf-num{width:9%;}.col-inf-pct{width:12%;}
   .topnav{padding:0 32px;}.topnav .logo{font-size:15px;padding:14px 20px 14px 0;}.topnav a{padding:14px 14px;font-size:13px;}
   .header{padding:28px 40px;}.header h1{font-size:22px;}.header .sub{font-size:13px;}
   .section{padding:28px 40px 32px;}.sec-title{font-size:16px;}
-  .kpi-row{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px;}
+  .kpi-row{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;}
   .kpi-card{padding:14px 16px;}.kpi-label{font-size:11px;}.kpi-val{font-size:24px;}
   thead th{padding:10px 12px;font-size:12px;}tbody td{padding:8px 12px;font-size:13px;}
   .ch-summary{font-size:13px;padding:10px 14px;}
@@ -76,65 +74,66 @@ html{scroll-behavior:smooth;}
     <div class="kpi-card" style="border-color:#3d1a78;"><div class="kpi-label">总订单</div><div class="kpi-val" style="color:#3d1a78;">2329</div></div>
     <div class="kpi-card" style="border-color:#1a6e3d;"><div class="kpi-label">正常班</div><div class="kpi-val" style="color:#1a6e3d;">1948</div></div>
     <div class="kpi-card" style="border-color:#e65100;"><div class="kpi-label">影子班</div><div class="kpi-val" style="color:#e65100;">137</div></div>
-    <div class="kpi-card" style="border-color:#c62828;"><div class="kpi-label">退款</div><div class="kpi-val" style="color:#c62828;">500</div></div>
+    <div class="kpi-card" style="border-color:#c62828;"><div class="kpi-label">退款订单</div><div class="kpi-val" style="color:#c62828;">500</div></div>
+    <div class="kpi-card" style="border-color:#2e7d32;"><div class="kpi-label">未退款订单</div><div class="kpi-val" style="color:#2e7d32;">1829</div></div>
     <div class="kpi-card kpi-alert" style="border-color:#fa7b17;"><div class="kpi-label">退款率</div><div class="kpi-val" style="color:#fa7b17;">21.5%</div></div>
     <div class="kpi-card " style="border-color:#9c27b0;"><div class="kpi-label">主动加微率</div><div class="kpi-val" style="color:#9c27b0;">51.5%</div></div>
     <div class="kpi-card " style="border-color:#00897b;"><div class="kpi-label">撞库率</div><div class="kpi-val" style="color:#00897b;">6.6%</div></div>
   </div>
   <h3 class="sub-title">渠道对比</h3>
   <div class="table-wrap"><table><thead><tr class="thead-purple">
-    <th>渠道</th><th>总单</th><th>正常</th><th>退款单</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
+    <th>渠道</th><th>总单</th><th>正常班</th><th>退款订单</th><th>未退款订单</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
   </tr></thead><tbody><tr>
     <td class="td-ch"><span class="ch-dot" style="background:#3d1a78;"></span>最小年轮</td>
-    <td>1530</td><td>1311</td><td>346</td>
+    <td>1530</td><td>1311</td><td>346</td><td>1184</td>
     <td class="alert-cell">22.6%</td>
     <td >56.1%</td>
     <td >3.0%</td>
   </tr><tr>
     <td class="td-ch"><span class="ch-dot" style="background:#1a6e3d;"></span>领航</td>
-    <td>529</td><td>394</td><td>91</td>
+    <td>529</td><td>394</td><td>91</td><td>438</td>
     <td >17.2%</td>
     <td >40.8%</td>
     <td >17.2%</td>
   </tr><tr>
     <td class="td-ch"><span class="ch-dot" style="background:#0d47a1;"></span>格物致知</td>
-    <td>152</td><td>152</td><td>35</td>
+    <td>152</td><td>152</td><td>35</td><td>117</td>
     <td class="alert-cell">23.0%</td>
     <td >49.3%</td>
     <td >0.0%</td>
   </tr><tr>
     <td class="td-ch"><span class="ch-dot" style="background:#e65100;"></span>杭州三只咪</td>
-    <td>52</td><td>46</td><td>10</td>
+    <td>52</td><td>46</td><td>10</td><td>42</td>
     <td >19.2%</td>
     <td >46.2%</td>
     <td >8.0%</td>
   </tr><tr>
     <td class="td-ch"><span class="ch-dot" style="background:#6a1a78;"></span>合肥徽起</td>
-    <td>27</td><td>24</td><td>8</td>
+    <td>27</td><td>24</td><td>8</td><td>19</td>
     <td class="alert-cell">29.6%</td>
     <td >44.4%</td>
     <td >0.0%</td>
   </tr><tr>
     <td class="td-ch"><span class="ch-dot" style="background:#00838f;"></span>自然流</td>
-    <td>24</td><td>13</td><td>6</td>
+    <td>24</td><td>13</td><td>6</td><td>18</td>
     <td class="alert-cell">25.0%</td>
     <td >20.8%</td>
     <td class="alert-cell">35.0%</td>
   </tr><tr>
     <td class="td-ch"><span class="ch-dot" style="background:#5d4037;"></span>山东深山</td>
-    <td>11</td><td>8</td><td>3</td>
+    <td>11</td><td>8</td><td>3</td><td>8</td>
     <td class="alert-cell">27.3%</td>
     <td >72.7%</td>
     <td >0.0%</td>
   </tr><tr>
     <td class="td-ch"><span class="ch-dot" style="background:#1565c0;"></span>文思泉涌</td>
-    <td>3</td><td>0</td><td>0</td>
+    <td>3</td><td>0</td><td>0</td><td>3</td>
     <td >0.0%</td>
     <td class="alert-cell">0.0%</td>
     <td class="alert-cell">100.0%</td>
   </tr><tr>
     <td class="td-ch"><span class="ch-dot" style="background:#888;"></span>未知渠道</td>
-    <td>1</td><td>0</td><td>1</td>
+    <td>1</td><td>0</td><td>1</td><td>0</td>
     <td class="alert-cell">100.0%</td>
     <td class="alert-cell">0.0%</td>
     <td >0.0%</td>
@@ -143,154 +142,158 @@ html{scroll-behavior:smooth;}
       <span class="ch-dot" style="background:#3d1a78;"></span>最小年轮
       <span class="ch-badge">1530单</span>
       <span class="ch-badge badge-alert">退款22.6%</span>
+      <span class="ch-badge ">撞库3.0%</span>
     </summary>
     <div class="table-wrap" style="border-radius:0 0 8px 8px;">
     <table class="inf-table" style="table-layout:fixed;width:100%;">
-      <colgroup><col class="col-inf-name"><col class="col-inf-num"><col class="col-inf-num"><col class="col-inf-pct"><col class="col-inf-pct"><col class="col-inf-pct"><col class="col-inf-pct mobile-hide-col"></colgroup>
+      <colgroup>
+        <col style="width:28%"><col style="width:8%"><col style="width:9%"><col style="width:9%">
+        <col style="width:11%"><col style="width:11%"><col style="width:11%"><col style="width:13%" class="mobile-hide-col">
+      </colgroup>
       <thead><tr style="background:#ede7f6;color:#4a148c;">
         <th style="text-align:left;padding-left:8px;">达人</th>
-        <th>总单</th><th>退款单</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
+        <th>总单</th><th>退款单</th><th>未退款</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
         <th class="mobile-hide">影子占比</th>
       </tr></thead><tbody><tr>
-      <td class="td-ch">李老师讲初升高</td><td>526</td><td>134</td>
+      <td class="td-ch">李老师讲初升高</td><td>526</td><td>134</td><td>392</td>
       <td class="alert-cell">25.5%</td>
       <td >54.4%</td>
       <td >3.8%</td>
       <td class="mobile-hide">3.2%</td>
     </tr><tr>
-      <td class="td-ch">一线王老师讲选科</td><td>150</td><td>35</td>
+      <td class="td-ch">一线王老师讲选科</td><td>150</td><td>35</td><td>115</td>
       <td class="alert-cell">23.3%</td>
       <td >52.7%</td>
       <td >1.5%</td>
       <td class="mobile-hide">1.3%</td>
     </tr><tr>
-      <td class="td-ch">郝老师聊选科-行知</td><td>146</td><td>43</td>
+      <td class="td-ch">郝老师聊选科-行知</td><td>146</td><td>43</td><td>103</td>
       <td class="alert-cell">29.5%</td>
       <td >61.6%</td>
       <td >0.8%</td>
       <td class="mobile-hide">0.7%</td>
     </tr><tr>
-      <td class="td-ch">刘老师讲中考a</td><td>112</td><td>24</td>
+      <td class="td-ch">刘老师讲中考a</td><td>112</td><td>24</td><td>88</td>
       <td class="alert-cell">21.4%</td>
       <td >58.9%</td>
       <td >3.8%</td>
       <td class="mobile-hide">3.6%</td>
     </tr><tr>
-      <td class="td-ch">行知老师讲规划</td><td>104</td><td>24</td>
+      <td class="td-ch">行知老师讲规划</td><td>104</td><td>24</td><td>80</td>
       <td class="alert-cell">23.1%</td>
       <td >59.6%</td>
       <td >3.3%</td>
       <td class="mobile-hide">2.9%</td>
     </tr><tr>
-      <td class="td-ch">王老师说选科</td><td>97</td><td>23</td>
+      <td class="td-ch">王老师说选科</td><td>97</td><td>23</td><td>74</td>
       <td class="alert-cell">23.7%</td>
       <td >66.0%</td>
       <td >3.6%</td>
       <td class="mobile-hide">3.1%</td>
     </tr><tr>
-      <td class="td-ch">董老师讲选科</td><td>77</td><td>15</td>
+      <td class="td-ch">董老师讲选科</td><td>77</td><td>15</td><td>62</td>
       <td >19.5%</td>
       <td >67.5%</td>
       <td >1.5%</td>
       <td class="mobile-hide">1.3%</td>
     </tr><tr>
-      <td class="td-ch">田老师讲选科</td><td>66</td><td>13</td>
+      <td class="td-ch">田老师讲选科</td><td>66</td><td>13</td><td>53</td>
       <td >19.7%</td>
       <td >59.1%</td>
       <td >4.9%</td>
       <td class="mobile-hide">4.5%</td>
     </tr><tr>
-      <td class="td-ch">升学规划.田雨</td><td>65</td><td>3</td>
+      <td class="td-ch">升学规划.田雨</td><td>65</td><td>3</td><td>62</td>
       <td >4.6%</td>
       <td >46.2%</td>
       <td >1.6%</td>
       <td class="mobile-hide">1.5%</td>
     </tr><tr>
-      <td class="td-ch">孙老师思维课堂-一起考</td><td>46</td><td>12</td>
+      <td class="td-ch">孙老师思维课堂-一起考</td><td>46</td><td>12</td><td>34</td>
       <td class="alert-cell">26.1%</td>
       <td >60.9%</td>
       <td >2.5%</td>
       <td class="mobile-hide">2.2%</td>
     </tr><tr>
-      <td class="td-ch">珊伊老师讲高考</td><td>33</td><td>3</td>
+      <td class="td-ch">珊伊老师讲高考</td><td>33</td><td>3</td><td>30</td>
       <td >9.1%</td>
       <td >48.5%</td>
       <td >9.1%</td>
       <td class="mobile-hide">9.1%</td>
     </tr><tr>
-      <td class="td-ch">晶晶老师升学规划</td><td>32</td><td>2</td>
+      <td class="td-ch">晶晶老师升学规划</td><td>32</td><td>2</td><td>30</td>
       <td >6.3%</td>
       <td >59.4%</td>
       <td >3.2%</td>
       <td class="mobile-hide">3.1%</td>
     </tr><tr>
-      <td class="td-ch">千佰惠公司聂老师</td><td>25</td><td>5</td>
+      <td class="td-ch">千佰惠公司聂老师</td><td>25</td><td>5</td><td>20</td>
       <td >20.0%</td>
       <td >24.0%</td>
       <td >0.0%</td>
       <td class="mobile-hide">0.0%</td>
     </tr><tr>
-      <td class="td-ch">唐老师高考规划</td><td>11</td><td>2</td>
+      <td class="td-ch">唐老师高考规划</td><td>11</td><td>2</td><td>9</td>
       <td >18.2%</td>
       <td >36.4%</td>
       <td >0.0%</td>
       <td class="mobile-hide">0.0%</td>
     </tr><tr>
-      <td class="td-ch">黄老师讲选科</td><td>11</td><td>2</td>
+      <td class="td-ch">黄老师讲选科</td><td>11</td><td>2</td><td>9</td>
       <td >18.2%</td>
       <td >54.5%</td>
       <td >0.0%</td>
       <td class="mobile-hide">0.0%</td>
     </tr><tr>
-      <td class="td-ch">超超老师讲选科</td><td>7</td><td>0</td>
+      <td class="td-ch">超超老师讲选科</td><td>7</td><td>0</td><td>7</td>
       <td >0.0%</td>
       <td >42.9%</td>
       <td >0.0%</td>
       <td class="mobile-hide">0.0%</td>
     </tr><tr>
-      <td class="td-ch">中考志愿填报刘老师</td><td>4</td><td>0</td>
+      <td class="td-ch">中考志愿填报刘老师</td><td>4</td><td>0</td><td>4</td>
       <td >0.0%</td>
       <td >75.0%</td>
       <td class="alert-cell">25.0%</td>
       <td class="mobile-hide">25.0%</td>
     </tr><tr>
-      <td class="td-ch">金榜题名</td><td>4</td><td>1</td>
+      <td class="td-ch">金榜题名</td><td>4</td><td>1</td><td>3</td>
       <td class="alert-cell">25.0%</td>
       <td >25.0%</td>
       <td >0.0%</td>
       <td class="mobile-hide">0.0%</td>
     </tr><tr>
-      <td class="td-ch">赵老师讲选科</td><td>3</td><td>0</td>
+      <td class="td-ch">赵老师讲选科</td><td>3</td><td>0</td><td>3</td>
       <td >0.0%</td>
       <td >33.3%</td>
       <td >0.0%</td>
       <td class="mobile-hide">0.0%</td>
     </tr><tr>
-      <td class="td-ch">郑州中考大实话</td><td>3</td><td>1</td>
+      <td class="td-ch">郑州中考大实话</td><td>3</td><td>1</td><td>2</td>
       <td class="alert-cell">33.3%</td>
       <td >33.3%</td>
       <td >0.0%</td>
       <td class="mobile-hide">0.0%</td>
     </tr><tr>
-      <td class="td-ch">刘老师升学规划(升知维)</td><td>3</td><td>2</td>
+      <td class="td-ch">刘老师升学规划(升知维)</td><td>3</td><td>2</td><td>1</td>
       <td class="alert-cell">66.7%</td>
       <td >33.3%</td>
       <td >0.0%</td>
       <td class="mobile-hide">0.0%</td>
     </tr><tr>
-      <td class="td-ch">邬老师讲规划</td><td>2</td><td>0</td>
+      <td class="td-ch">邬老师讲规划</td><td>2</td><td>0</td><td>2</td>
       <td >0.0%</td>
       <td >100.0%</td>
       <td >0.0%</td>
       <td class="mobile-hide">0.0%</td>
     </tr><tr>
-      <td class="td-ch">李老师讲升学规划</td><td>2</td><td>2</td>
+      <td class="td-ch">李老师讲升学规划</td><td>2</td><td>2</td><td>0</td>
       <td class="alert-cell">100.0%</td>
       <td class="alert-cell">0.0%</td>
       <td >0.0%</td>
       <td class="mobile-hide">0.0%</td>
     </tr><tr>
-      <td class="td-ch">刘老师讲中考</td><td>1</td><td>0</td>
+      <td class="td-ch">刘老师讲中考</td><td>1</td><td>0</td><td>1</td>
       <td >0.0%</td>
       <td class="alert-cell">0.0%</td>
       <td >0.0%</td>
@@ -300,124 +303,128 @@ html{scroll-behavior:smooth;}
       <span class="ch-dot" style="background:#1a6e3d;"></span>领航
       <span class="ch-badge">529单</span>
       <span class="ch-badge ">退款17.2%</span>
+      <span class="ch-badge ">撞库17.2%</span>
     </summary>
     <div class="table-wrap" style="border-radius:0 0 8px 8px;">
     <table class="inf-table" style="table-layout:fixed;width:100%;">
-      <colgroup><col class="col-inf-name"><col class="col-inf-num"><col class="col-inf-num"><col class="col-inf-pct"><col class="col-inf-pct"><col class="col-inf-pct"><col class="col-inf-pct mobile-hide-col"></colgroup>
+      <colgroup>
+        <col style="width:28%"><col style="width:8%"><col style="width:9%"><col style="width:9%">
+        <col style="width:11%"><col style="width:11%"><col style="width:11%"><col style="width:13%" class="mobile-hide-col">
+      </colgroup>
       <thead><tr style="background:#ede7f6;color:#4a148c;">
         <th style="text-align:left;padding-left:8px;">达人</th>
-        <th>总单</th><th>退款单</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
+        <th>总单</th><th>退款单</th><th>未退款</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
         <th class="mobile-hide">影子占比</th>
       </tr></thead><tbody><tr>
-      <td class="td-ch">高中班主任张老师升学</td><td>69</td><td>5</td>
+      <td class="td-ch">高中班主任张老师升学</td><td>69</td><td>5</td><td>64</td>
       <td >7.2%</td>
       <td >20.3%</td>
       <td class="alert-cell">33.3%</td>
       <td class="mobile-hide">31.9%</td>
     </tr><tr>
-      <td class="td-ch">刘老师升学规划</td><td>68</td><td>5</td>
+      <td class="td-ch">刘老师升学规划</td><td>68</td><td>5</td><td>63</td>
       <td >7.4%</td>
       <td >30.9%</td>
       <td class="alert-cell">27.3%</td>
       <td class="mobile-hide">26.5%</td>
     </tr><tr>
-      <td class="td-ch">升学规划雯老师-泓图</td><td>66</td><td>22</td>
+      <td class="td-ch">升学规划雯老师-泓图</td><td>66</td><td>22</td><td>44</td>
       <td class="alert-cell">33.3%</td>
       <td >57.6%</td>
       <td >3.3%</td>
       <td class="mobile-hide">3.0%</td>
     </tr><tr>
-      <td class="td-ch">陈老师升学规划</td><td>63</td><td>4</td>
+      <td class="td-ch">陈老师升学规划</td><td>63</td><td>4</td><td>59</td>
       <td >6.3%</td>
       <td >31.7%</td>
       <td >13.1%</td>
       <td class="mobile-hide">12.7%</td>
     </tr><tr>
-      <td class="td-ch">高中生升学规划</td><td>60</td><td>2</td>
+      <td class="td-ch">高中生升学规划</td><td>60</td><td>2</td><td>58</td>
       <td >3.3%</td>
       <td >36.7%</td>
       <td class="alert-cell">32.8%</td>
       <td class="mobile-hide">31.7%</td>
     </tr><tr>
-      <td class="td-ch">升学规划白老师</td><td>41</td><td>3</td>
+      <td class="td-ch">升学规划白老师</td><td>41</td><td>3</td><td>38</td>
       <td >7.3%</td>
       <td >36.6%</td>
       <td class="alert-cell">25.6%</td>
       <td class="mobile-hide">24.4%</td>
     </tr><tr>
-      <td class="td-ch">马老师升学规划</td><td>40</td><td>11</td>
+      <td class="td-ch">马老师升学规划</td><td>40</td><td>11</td><td>29</td>
       <td class="alert-cell">27.5%</td>
       <td >47.5%</td>
       <td >0.0%</td>
       <td class="mobile-hide">0.0%</td>
     </tr><tr>
-      <td class="td-ch">赵主任讲女生规划</td><td>30</td><td>5</td>
+      <td class="td-ch">赵主任讲女生规划</td><td>30</td><td>5</td><td>25</td>
       <td >16.7%</td>
       <td >66.7%</td>
       <td >0.0%</td>
       <td class="mobile-hide">0.0%</td>
     </tr><tr>
-      <td class="td-ch">王老师聊高考规划</td><td>23</td><td>16</td>
+      <td class="td-ch">王老师聊高考规划</td><td>23</td><td>16</td><td>7</td>
       <td class="alert-cell">69.6%</td>
       <td >47.8%</td>
       <td >0.0%</td>
       <td class="mobile-hide">0.0%</td>
     </tr><tr>
-      <td class="td-ch">郑州中考规划</td><td>23</td><td>9</td>
+      <td class="td-ch">郑州中考规划</td><td>23</td><td>9</td><td>14</td>
       <td class="alert-cell">39.1%</td>
       <td >52.2%</td>
       <td >0.0%</td>
       <td class="mobile-hide">0.0%</td>
     </tr><tr>
-      <td class="td-ch">昭昭老师讲升学</td><td>17</td><td>5</td>
+      <td class="td-ch">昭昭老师讲升学</td><td>17</td><td>5</td><td>12</td>
       <td class="alert-cell">29.4%</td>
       <td >58.8%</td>
       <td >12.5%</td>
       <td class="mobile-hide">11.8%</td>
     </tr><tr>
-      <td class="td-ch">小满老师讲选科规划🎓</td><td>11</td><td>1</td>
+      <td class="td-ch">小满老师讲选科规划🎓</td><td>11</td><td>1</td><td>10</td>
       <td >9.1%</td>
       <td >63.6%</td>
       <td >0.0%</td>
       <td class="mobile-hide">0.0%</td>
     </tr><tr>
-      <td class="td-ch">张利老师聊升学（慧润文化）</td><td>8</td><td>0</td>
+      <td class="td-ch">张利老师聊升学（慧润文化）</td><td>8</td><td>0</td><td>8</td>
       <td >0.0%</td>
       <td >37.5%</td>
       <td >0.0%</td>
       <td class="mobile-hide">0.0%</td>
     </tr><tr>
-      <td class="td-ch">湖南高考老师 985</td><td>3</td><td>1</td>
+      <td class="td-ch">湖南高考老师 985</td><td>3</td><td>1</td><td>2</td>
       <td class="alert-cell">33.3%</td>
       <td >33.3%</td>
       <td >0.0%</td>
       <td class="mobile-hide">0.0%</td>
     </tr><tr>
-      <td class="td-ch">大王老师说郑州升学</td><td>3</td><td>0</td>
+      <td class="td-ch">大王老师说郑州升学</td><td>3</td><td>0</td><td>3</td>
       <td >0.0%</td>
       <td >33.3%</td>
       <td class="alert-cell">33.3%</td>
       <td class="mobile-hide">33.3%</td>
     </tr><tr>
-      <td class="td-ch">宋老师聊升学</td><td>1</td><td>0</td>
+      <td class="td-ch">宋老师聊升学</td><td>1</td><td>0</td><td>1</td>
       <td >0.0%</td>
       <td >100.0%</td>
       <td >0.0%</td>
       <td class="mobile-hide">0.0%</td>
     </tr><tr>
-      <td class="td-ch">高中升学规划</td><td>1</td><td>0</td>
+      <td class="td-ch">高中升学规划</td><td>1</td><td>0</td><td>1</td>
       <td >0.0%</td>
       <td >100.0%</td>
       <td >0.0%</td>
       <td class="mobile-hide">0.0%</td>
     </tr><tr>
-      <td class="td-ch">山西升学于老师</td><td>1</td><td>1</td>
+      <td class="td-ch">山西升学于老师</td><td>1</td><td>1</td><td>0</td>
       <td class="alert-cell">100.0%</td>
       <td class="alert-cell">0.0%</td>
       <td >0.0%</td>
       <td class="mobile-hide">0.0%</td>
     </tr><tr>
-      <td class="td-ch">方老师讲升学规划</td><td>1</td><td>1</td>
+      <td class="td-ch">方老师讲升学规划</td><td>1</td><td>1</td><td>0</td>
       <td class="alert-cell">100.0%</td>
       <td class="alert-cell">0.0%</td>
       <td >0.0%</td>
@@ -427,22 +434,26 @@ html{scroll-behavior:smooth;}
       <span class="ch-dot" style="background:#0d47a1;"></span>格物致知
       <span class="ch-badge">152单</span>
       <span class="ch-badge badge-alert">退款23.0%</span>
+      <span class="ch-badge ">撞库0.0%</span>
     </summary>
     <div class="table-wrap" style="border-radius:0 0 8px 8px;">
     <table class="inf-table" style="table-layout:fixed;width:100%;">
-      <colgroup><col class="col-inf-name"><col class="col-inf-num"><col class="col-inf-num"><col class="col-inf-pct"><col class="col-inf-pct"><col class="col-inf-pct"><col class="col-inf-pct mobile-hide-col"></colgroup>
+      <colgroup>
+        <col style="width:28%"><col style="width:8%"><col style="width:9%"><col style="width:9%">
+        <col style="width:11%"><col style="width:11%"><col style="width:11%"><col style="width:13%" class="mobile-hide-col">
+      </colgroup>
       <thead><tr style="background:#ede7f6;color:#4a148c;">
         <th style="text-align:left;padding-left:8px;">达人</th>
-        <th>总单</th><th>退款单</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
+        <th>总单</th><th>退款单</th><th>未退款</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
         <th class="mobile-hide">影子占比</th>
       </tr></thead><tbody><tr>
-      <td class="td-ch">樊老师读书分享</td><td>92</td><td>18</td>
+      <td class="td-ch">樊老师读书分享</td><td>92</td><td>18</td><td>74</td>
       <td >19.6%</td>
       <td >46.7%</td>
       <td >0.0%</td>
       <td class="mobile-hide">0.0%</td>
     </tr><tr>
-      <td class="td-ch">文老师升学规划课堂</td><td>60</td><td>17</td>
+      <td class="td-ch">文老师升学规划课堂</td><td>60</td><td>17</td><td>43</td>
       <td class="alert-cell">28.3%</td>
       <td >53.3%</td>
       <td >0.0%</td>
@@ -452,52 +463,56 @@ html{scroll-behavior:smooth;}
       <span class="ch-dot" style="background:#e65100;"></span>杭州三只咪
       <span class="ch-badge">52单</span>
       <span class="ch-badge ">退款19.2%</span>
+      <span class="ch-badge ">撞库8.0%</span>
     </summary>
     <div class="table-wrap" style="border-radius:0 0 8px 8px;">
     <table class="inf-table" style="table-layout:fixed;width:100%;">
-      <colgroup><col class="col-inf-name"><col class="col-inf-num"><col class="col-inf-num"><col class="col-inf-pct"><col class="col-inf-pct"><col class="col-inf-pct"><col class="col-inf-pct mobile-hide-col"></colgroup>
+      <colgroup>
+        <col style="width:28%"><col style="width:8%"><col style="width:9%"><col style="width:9%">
+        <col style="width:11%"><col style="width:11%"><col style="width:11%"><col style="width:13%" class="mobile-hide-col">
+      </colgroup>
       <thead><tr style="background:#ede7f6;color:#4a148c;">
         <th style="text-align:left;padding-left:8px;">达人</th>
-        <th>总单</th><th>退款单</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
+        <th>总单</th><th>退款单</th><th>未退款</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
         <th class="mobile-hide">影子占比</th>
       </tr></thead><tbody><tr>
-      <td class="td-ch">刘老师思维课堂88</td><td>29</td><td>3</td>
+      <td class="td-ch">刘老师思维课堂88</td><td>29</td><td>3</td><td>26</td>
       <td >10.3%</td>
       <td >41.4%</td>
       <td >3.6%</td>
       <td class="mobile-hide">3.4%</td>
     </tr><tr>
-      <td class="td-ch">小满老师思维课堂</td><td>8</td><td>2</td>
+      <td class="td-ch">小满老师思维课堂</td><td>8</td><td>2</td><td>6</td>
       <td class="alert-cell">25.0%</td>
       <td >75.0%</td>
       <td >12.5%</td>
       <td class="mobile-hide">12.5%</td>
     </tr><tr>
-      <td class="td-ch">罗老师讲思维（三只咪 ）</td><td>6</td><td>4</td>
+      <td class="td-ch">罗老师讲思维（三只咪 ）</td><td>6</td><td>4</td><td>2</td>
       <td class="alert-cell">66.7%</td>
       <td >50.0%</td>
       <td >0.0%</td>
       <td class="mobile-hide">0.0%</td>
     </tr><tr>
-      <td class="td-ch">浙大奥数张老师</td><td>4</td><td>1</td>
+      <td class="td-ch">浙大奥数张老师</td><td>4</td><td>1</td><td>3</td>
       <td class="alert-cell">25.0%</td>
       <td >50.0%</td>
       <td >0.0%</td>
       <td class="mobile-hide">0.0%</td>
     </tr><tr>
-      <td class="td-ch">韩老师满分思维课</td><td>2</td><td>0</td>
+      <td class="td-ch">韩老师满分思维课</td><td>2</td><td>0</td><td>2</td>
       <td >0.0%</td>
       <td >50.0%</td>
       <td class="alert-cell">50.0%</td>
       <td class="mobile-hide">50.0%</td>
     </tr><tr>
-      <td class="td-ch">北大奥数珊珊老师1</td><td>2</td><td>0</td>
+      <td class="td-ch">北大奥数珊珊老师1</td><td>2</td><td>0</td><td>2</td>
       <td >0.0%</td>
       <td class="alert-cell">0.0%</td>
       <td >0.0%</td>
       <td class="mobile-hide">0.0%</td>
     </tr><tr>
-      <td class="td-ch">宋老师思维学习力</td><td>1</td><td>0</td>
+      <td class="td-ch">宋老师思维学习力</td><td>1</td><td>0</td><td>1</td>
       <td >0.0%</td>
       <td class="alert-cell">0.0%</td>
       <td class="alert-cell">100.0%</td>
@@ -507,22 +522,26 @@ html{scroll-behavior:smooth;}
       <span class="ch-dot" style="background:#6a1a78;"></span>合肥徽起
       <span class="ch-badge">27单</span>
       <span class="ch-badge badge-alert">退款29.6%</span>
+      <span class="ch-badge ">撞库0.0%</span>
     </summary>
     <div class="table-wrap" style="border-radius:0 0 8px 8px;">
     <table class="inf-table" style="table-layout:fixed;width:100%;">
-      <colgroup><col class="col-inf-name"><col class="col-inf-num"><col class="col-inf-num"><col class="col-inf-pct"><col class="col-inf-pct"><col class="col-inf-pct"><col class="col-inf-pct mobile-hide-col"></colgroup>
+      <colgroup>
+        <col style="width:28%"><col style="width:8%"><col style="width:9%"><col style="width:9%">
+        <col style="width:11%"><col style="width:11%"><col style="width:11%"><col style="width:13%" class="mobile-hide-col">
+      </colgroup>
       <thead><tr style="background:#ede7f6;color:#4a148c;">
         <th style="text-align:left;padding-left:8px;">达人</th>
-        <th>总单</th><th>退款单</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
+        <th>总单</th><th>退款单</th><th>未退款</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
         <th class="mobile-hide">影子占比</th>
       </tr></thead><tbody><tr>
-      <td class="td-ch">初升高入团规划大课堂</td><td>26</td><td>7</td>
+      <td class="td-ch">初升高入团规划大课堂</td><td>26</td><td>7</td><td>19</td>
       <td class="alert-cell">26.9%</td>
       <td >42.3%</td>
       <td >0.0%</td>
       <td class="mobile-hide">0.0%</td>
     </tr><tr>
-      <td class="td-ch">铁饭碗规划专场</td><td>1</td><td>1</td>
+      <td class="td-ch">铁饭碗规划专场</td><td>1</td><td>1</td><td>0</td>
       <td class="alert-cell">100.0%</td>
       <td >100.0%</td>
       <td >0.0%</td>
@@ -532,16 +551,20 @@ html{scroll-behavior:smooth;}
       <span class="ch-dot" style="background:#00838f;"></span>自然流
       <span class="ch-badge">24单</span>
       <span class="ch-badge badge-alert">退款25.0%</span>
+      <span class="ch-badge badge-alert">撞库35.0%</span>
     </summary>
     <div class="table-wrap" style="border-radius:0 0 8px 8px;">
     <table class="inf-table" style="table-layout:fixed;width:100%;">
-      <colgroup><col class="col-inf-name"><col class="col-inf-num"><col class="col-inf-num"><col class="col-inf-pct"><col class="col-inf-pct"><col class="col-inf-pct"><col class="col-inf-pct mobile-hide-col"></colgroup>
+      <colgroup>
+        <col style="width:28%"><col style="width:8%"><col style="width:9%"><col style="width:9%">
+        <col style="width:11%"><col style="width:11%"><col style="width:11%"><col style="width:13%" class="mobile-hide-col">
+      </colgroup>
       <thead><tr style="background:#ede7f6;color:#4a148c;">
         <th style="text-align:left;padding-left:8px;">达人</th>
-        <th>总单</th><th>退款单</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
+        <th>总单</th><th>退款单</th><th>未退款</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
         <th class="mobile-hide">影子占比</th>
       </tr></thead><tbody><tr>
-      <td class="td-ch">自然流</td><td>24</td><td>6</td>
+      <td class="td-ch">自然流</td><td>24</td><td>6</td><td>18</td>
       <td class="alert-cell">25.0%</td>
       <td >20.8%</td>
       <td class="alert-cell">35.0%</td>
@@ -551,16 +574,20 @@ html{scroll-behavior:smooth;}
       <span class="ch-dot" style="background:#5d4037;"></span>山东深山
       <span class="ch-badge">11单</span>
       <span class="ch-badge badge-alert">退款27.3%</span>
+      <span class="ch-badge ">撞库0.0%</span>
     </summary>
     <div class="table-wrap" style="border-radius:0 0 8px 8px;">
     <table class="inf-table" style="table-layout:fixed;width:100%;">
-      <colgroup><col class="col-inf-name"><col class="col-inf-num"><col class="col-inf-num"><col class="col-inf-pct"><col class="col-inf-pct"><col class="col-inf-pct"><col class="col-inf-pct mobile-hide-col"></colgroup>
+      <colgroup>
+        <col style="width:28%"><col style="width:8%"><col style="width:9%"><col style="width:9%">
+        <col style="width:11%"><col style="width:11%"><col style="width:11%"><col style="width:13%" class="mobile-hide-col">
+      </colgroup>
       <thead><tr style="background:#ede7f6;color:#4a148c;">
         <th style="text-align:left;padding-left:8px;">达人</th>
-        <th>总单</th><th>退款单</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
+        <th>总单</th><th>退款单</th><th>未退款</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
         <th class="mobile-hide">影子占比</th>
       </tr></thead><tbody><tr>
-      <td class="td-ch">徐老师讲升学(欢喜）</td><td>11</td><td>3</td>
+      <td class="td-ch">徐老师讲升学(欢喜）</td><td>11</td><td>3</td><td>8</td>
       <td class="alert-cell">27.3%</td>
       <td >72.7%</td>
       <td >0.0%</td>
@@ -570,22 +597,26 @@ html{scroll-behavior:smooth;}
       <span class="ch-dot" style="background:#1565c0;"></span>文思泉涌
       <span class="ch-badge">3单</span>
       <span class="ch-badge ">退款0.0%</span>
+      <span class="ch-badge badge-alert">撞库100.0%</span>
     </summary>
     <div class="table-wrap" style="border-radius:0 0 8px 8px;">
     <table class="inf-table" style="table-layout:fixed;width:100%;">
-      <colgroup><col class="col-inf-name"><col class="col-inf-num"><col class="col-inf-num"><col class="col-inf-pct"><col class="col-inf-pct"><col class="col-inf-pct"><col class="col-inf-pct mobile-hide-col"></colgroup>
+      <colgroup>
+        <col style="width:28%"><col style="width:8%"><col style="width:9%"><col style="width:9%">
+        <col style="width:11%"><col style="width:11%"><col style="width:11%"><col style="width:13%" class="mobile-hide-col">
+      </colgroup>
       <thead><tr style="background:#ede7f6;color:#4a148c;">
         <th style="text-align:left;padding-left:8px;">达人</th>
-        <th>总单</th><th>退款单</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
+        <th>总单</th><th>退款单</th><th>未退款</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
         <th class="mobile-hide">影子占比</th>
       </tr></thead><tbody><tr>
-      <td class="td-ch">如愿升学规划指导号</td><td>2</td><td>0</td>
+      <td class="td-ch">如愿升学规划指导号</td><td>2</td><td>0</td><td>2</td>
       <td >0.0%</td>
       <td class="alert-cell">0.0%</td>
       <td class="alert-cell">100.0%</td>
       <td class="mobile-hide">100.0%</td>
     </tr><tr>
-      <td class="td-ch">升学与规划</td><td>1</td><td>0</td>
+      <td class="td-ch">升学与规划</td><td>1</td><td>0</td><td>1</td>
       <td >0.0%</td>
       <td class="alert-cell">0.0%</td>
       <td class="alert-cell">100.0%</td>
@@ -595,16 +626,20 @@ html{scroll-behavior:smooth;}
       <span class="ch-dot" style="background:#888;"></span>未知渠道
       <span class="ch-badge">1单</span>
       <span class="ch-badge badge-alert">退款100.0%</span>
+      <span class="ch-badge ">撞库0.0%</span>
     </summary>
     <div class="table-wrap" style="border-radius:0 0 8px 8px;">
     <table class="inf-table" style="table-layout:fixed;width:100%;">
-      <colgroup><col class="col-inf-name"><col class="col-inf-num"><col class="col-inf-num"><col class="col-inf-pct"><col class="col-inf-pct"><col class="col-inf-pct"><col class="col-inf-pct mobile-hide-col"></colgroup>
+      <colgroup>
+        <col style="width:28%"><col style="width:8%"><col style="width:9%"><col style="width:9%">
+        <col style="width:11%"><col style="width:11%"><col style="width:11%"><col style="width:13%" class="mobile-hide-col">
+      </colgroup>
       <thead><tr style="background:#ede7f6;color:#4a148c;">
         <th style="text-align:left;padding-left:8px;">达人</th>
-        <th>总单</th><th>退款单</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
+        <th>总单</th><th>退款单</th><th>未退款</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
         <th class="mobile-hide">影子占比</th>
       </tr></thead><tbody><tr>
-      <td class="td-ch">数学许老师</td><td>1</td><td>1</td>
+      <td class="td-ch">数学许老师</td><td>1</td><td>1</td><td>0</td>
       <td class="alert-cell">100.0%</td>
       <td class="alert-cell">0.0%</td>
       <td >0.0%</td>
