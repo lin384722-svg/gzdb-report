@@ -2,616 +2,1086 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=2.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>直播号订单数据播报</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:#f0f2f7;color:#222;}
-.topnav{position:sticky;top:0;z-index:100;background:#3d1a78;display:flex;align-items:center;padding:0 10px;box-shadow:0 2px 10px rgba(0,0,0,.4);overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;}
-.topnav .logo{color:white;font-weight:800;font-size:13px;padding:11px 10px 11px 0;border-right:1px solid rgba(255,255,255,.2);margin-right:4px;flex-shrink:0;}
-.topnav a{color:rgba(255,255,255,.9);text-decoration:none;padding:11px 9px;font-size:12px;flex-shrink:0;white-space:nowrap;}
-.topnav a:hover{background:rgba(255,255,255,.15);}
-.header{background:linear-gradient(135deg,#3d1a78 0%,#6a1faa 60%,#9c4dcc 100%);color:white;padding:16px;}
-.header h1{font-size:16px;font-weight:800;}
-.header .sub{font-size:11px;opacity:.8;margin-top:4px;line-height:1.6;}
-.section{padding:14px;border-bottom:2px solid #e4e8f0;}
-.sec-title{font-size:14px;font-weight:700;color:#3d1a78;margin-bottom:10px;padding-left:8px;border-left:4px solid #3d1a78;}
-.sub-title{font-size:12px;font-weight:700;color:#5c2d91;margin:14px 0 6px;padding-left:6px;border-left:3px solid #9c6cd1;}
-.tip{font-size:10px;color:#b71c1c;background:#fff8e1;border:1px solid #ffe082;padding:4px 8px;border-radius:6px;margin-bottom:10px;display:inline-block;line-height:1.5;}
-.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px;}
-.kpi-card{background:white;border-radius:7px;padding:8px;box-shadow:0 2px 5px rgba(0,0,0,.07);border-top:3px solid #ccc;}
-.kpi-alert{background:#fff5f5!important;}
-.kpi-label{font-size:10px;color:#888;margin-bottom:3px;}
-.kpi-val{font-size:16px;font-weight:800;}
-.table-wrap{overflow-x:auto;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.07);-webkit-overflow-scrolling:touch;}
-table{width:100%;border-collapse:collapse;background:white;}
-thead th{padding:7px 10px;text-align:center;white-space:nowrap;font-size:11px;min-width:52px;}
-tbody td{border-bottom:1px solid #f0f0f0;text-align:center;padding:6px 8px;font-size:11px;white-space:nowrap;min-width:48px;}
-.td-ch{text-align:left!important;padding-left:8px!important;white-space:nowrap!important;}
-.td-indent{padding-left:18px!important;}
+.topnav{position:sticky;top:0;z-index:100;background:#3d1a78;display:flex;align-items:center;padding:0 32px;box-shadow:0 2px 10px rgba(0,0,0,.4);}
+.topnav .logo{color:white;font-weight:800;font-size:15px;padding:14px 20px 14px 0;border-right:1px solid rgba(255,255,255,.2);margin-right:8px;white-space:nowrap;}
+.topnav a{color:rgba(255,255,255,.8);text-decoration:none;padding:14px 16px;font-size:13px;transition:.2s;}
+.topnav a:hover{background:rgba(255,255,255,.15);color:white;}
+.header{background:linear-gradient(135deg,#3d1a78 0%,#6a1faa 60%,#9c4dcc 100%);color:white;padding:30px 40px 28px;}
+.header h1{font-size:24px;font-weight:800;letter-spacing:.5px;}
+.header .sub{font-size:13px;opacity:.8;margin-top:6px;}
+.section{padding:28px 40px 32px;border-bottom:2px solid #e4e8f0;}
+.sec-title{font-size:17px;font-weight:700;color:#3d1a78;margin-bottom:16px;padding-left:12px;border-left:4px solid #3d1a78;}
+.sub-title{font-size:14px;font-weight:700;color:#5c2d91;margin:22px 0 10px;padding-left:10px;border-left:3px solid #9c6cd1;}
+.tip{font-size:12px;color:#b71c1c;background:#fff8e1;border:1px solid #ffe082;padding:6px 14px;border-radius:6px;margin-bottom:16px;display:inline-block;}
+.kpi-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:24px;}
+.kpi-card{flex:1;min-width:130px;background:white;border-radius:10px;padding:16px 18px;box-shadow:0 2px 8px rgba(0,0,0,.07);border-top:4px solid #ccc;transition:.2s;}
+.kpi-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.12);transform:translateY(-2px);}
+.kpi-alert{background:#fff5f5 !important;}
+.kpi-label{font-size:11px;color:#888;margin-bottom:8px;white-space:nowrap;}
+.kpi-val{font-size:26px;font-weight:800;}
+.table-wrap{overflow-x:auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.07);}
+table{width:max-content;min-width:100%;border-collapse:collapse;background:white;font-size:13px;}
+thead th{padding:10px 18px;text-align:center;white-space:nowrap;font-size:12px;}
+tbody td{border-bottom:1px solid #f0f0f0;text-align:center;padding:8px 18px;white-space:nowrap;}
 tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover td{background:#faf5ff !important;}
 .alert-cell{background:#fde8e8!important;color:#c62828!important;font-weight:700!important;}
 .thead-purple{background:#3d1a78;color:white;}
 .thead-green{background:#1a6e3d;color:white;}
 .thead-blue{background:#0d47a1;color:white;}
-.ch-block{margin-bottom:8px;border-radius:8px;overflow:hidden;box-shadow:0 2px 5px rgba(0,0,0,.06);}
-.ch-summary{background:#ede7f6;padding:8px 10px;cursor:pointer;font-weight:700;color:#4a148c;list-style:none;user-select:none;display:flex;align-items:center;gap:6px;font-size:12px;white-space:nowrap;}
-.ch-badge{font-size:10px;font-weight:600;background:rgba(255,255,255,.7);padding:2px 5px;border-radius:10px;color:#333;}
-.badge-alert{background:#fde8e8!important;color:#c62828!important;}
-.ch-dot{display:inline-block;width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-.mobile-hide{display:none;}
-.mobile-only{display:block;}
-.desktop-only{display:none;}
-@media(min-width:768px){
-  .mobile-hide{display:table-cell;}
-  .mobile-only{display:none!important;}
-  .desktop-only{display:block!important;}
-  .topnav{padding:0 32px;}.topnav .logo{font-size:15px;padding:14px 20px 14px 0;}.topnav a{padding:14px 14px;font-size:13px;}
-  .header{padding:28px 40px;}.header h1{font-size:22px;}.header .sub{font-size:13px;}
-  .section{padding:28px 40px 32px;}.sec-title{font-size:16px;}
-  .kpi-row{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;}
-  .kpi-card{padding:14px 16px;}.kpi-label{font-size:11px;}.kpi-val{font-size:24px;}
-  thead th{padding:10px 12px;font-size:12px;}tbody td{padding:8px 12px;font-size:13px;}
-  .ch-summary{font-size:13px;padding:10px 14px;}
-}
+.ch-block{margin-bottom:10px;border-radius:8px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.06);}
+.ch-summary{background:#ede7f6;padding:10px 16px;cursor:pointer;font-weight:700;color:#4a148c;list-style:none;user-select:none;display:flex;align-items:center;gap:10px;}
+.ch-summary:hover{background:#d1c4e9;}
+.ch-badge{font-size:11px;font-weight:600;background:rgba(255,255,255,.7);padding:2px 8px;border-radius:12px;color:#333;}
+.ch-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle;}
 html{scroll-behavior:smooth;}
 </style>
 </head>
 <body>
 <nav class="topnav">
-  <div class="logo">📊 播报</div>
-  <a href="#process">①过程</a><a href="#grade">②年级</a>
-  <a href="#channel-date">③渠道×日期</a><a href="#channel-summary">④渠道×年级</a>
+  <div class="logo">📊 数据播报</div>
+  <a href="#process">① 过程指标</a>
+  <a href="#channel-summary">② 渠道汇总</a>
+  <a href="#channel-date">③ 渠道×日期</a>
+  <a href="#grade">④ 年级进量</a>
 </nav>
 <div class="header">
   <h1>直播号订单数据播报</h1>
-  <div class="sub">数据日期：2026-03-14 ~ 2026-05-05 ｜ 总订单：2329 单 ｜ 正常班：1948 单</div>
+  <div class="sub">数据日期：2026-05-02 ~ 2026-05-08 &nbsp;｜&nbsp; 总订单：2721 单 &nbsp;｜&nbsp; 正常班：2504 单 &nbsp;｜&nbsp; 渠道：最小年轮 / 兜底代理 / 领航 / 合肥徽起</div>
 </div>
+
 <div id="process" class="section">
   <h2 class="sec-title">① 渠道过程指标</h2>
-  <div class="tip">标红：退款率&gt;20% | 主动加微率&lt;10% | 撞库率&gt;20%</div>
+  <div class="tip">异常标红：退款率 &gt; 20% &nbsp;|&nbsp; 主动加微率 &lt; 10%</div>
   <div class="kpi-row">
-    <div class="kpi-card" style="border-color:#3d1a78;"><div class="kpi-label">总订单</div><div class="kpi-val" style="color:#3d1a78;">2329</div></div>
-    <div class="kpi-card" style="border-color:#1a6e3d;"><div class="kpi-label">正常班</div><div class="kpi-val" style="color:#1a6e3d;">1948</div></div>
-    <div class="kpi-card" style="border-color:#e65100;"><div class="kpi-label">影子班</div><div class="kpi-val" style="color:#e65100;">137</div></div>
-    <div class="kpi-card" style="border-color:#c62828;"><div class="kpi-label">退款订单</div><div class="kpi-val" style="color:#c62828;">500</div></div>
-    <div class="kpi-card" style="border-color:#2e7d32;"><div class="kpi-label">未退款订单</div><div class="kpi-val" style="color:#2e7d32;">1829</div></div>
-    <div class="kpi-card kpi-alert" style="border-color:#fa7b17;"><div class="kpi-label">退款率</div><div class="kpi-val" style="color:#fa7b17;">21.5%</div></div>
-    <div class="kpi-card " style="border-color:#9c27b0;"><div class="kpi-label">主动加微率</div><div class="kpi-val" style="color:#9c27b0;">51.5%</div></div>
-    <div class="kpi-card " style="border-color:#00897b;"><div class="kpi-label">撞库率</div><div class="kpi-val" style="color:#00897b;">6.6%</div></div>
+    <div class="kpi-card" style="border-color:#3d1a78;"><div class="kpi-label">总订单</div><div class="kpi-val" style="color:#3d1a78;">2721</div></div>
+    <div class="kpi-card" style="border-color:#1a6e3d;"><div class="kpi-label">正常班</div><div class="kpi-val" style="color:#1a6e3d;">2504</div></div>
+    <div class="kpi-card" style="border-color:#e65100;"><div class="kpi-label">影子班</div><div class="kpi-val" style="color:#e65100;">202</div></div>
+    <div class="kpi-card" style="border-color:#c62828;"><div class="kpi-label">退款订单</div><div class="kpi-val" style="color:#c62828;">530</div></div>
+    <div class="kpi-card " style="border-color:#fa7b17;"><div class="kpi-label">退款率（大盘）</div><div class="kpi-val" style="color:#fa7b17;">19.5%</div></div>
+    <div class="kpi-card " style="border-color:#9c27b0;"><div class="kpi-label">主动加微率（大盘）</div><div class="kpi-val" style="color:#9c27b0;">48.3%</div></div>
+    <div class="kpi-card" style="border-color:#546e7a;"><div class="kpi-label">影子班占比（大盘）</div><div class="kpi-val" style="color:#546e7a;">7.4%</div></div>
   </div>
-  <h3 class="sub-title">渠道对比</h3>
-  <div class="table-wrap"><table style="min-width:550px;"><thead><tr class="thead-purple"><th>渠道</th><th>总单</th><th>正常班</th><th>退款订单</th><th>未退款订单</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
-  </tr></thead><tbody><tr>
-    <td class="td-ch"><span class="ch-dot" style="background:#3d1a78;"></span>最小年轮</td>
-    <td>1530</td><td>1311</td><td>346</td><td>1184</td>
-    <td class="alert-cell">22.6%</td>
-    <td >56.1%</td>
-    <td >3.0%</td>
+  <h3 class="sub-title">按渠道横向对比</h3>
+  <div class="table-wrap"><table>
+    <thead><tr class="thead-purple">
+      <th>渠道名称</th><th>总订单</th><th>退款率</th><th>主动加微率</th><th>影子班占比</th>
+    </tr></thead>
+    <tbody><tr>
+    <td style="text-align:left;padding:9px 14px;font-weight:600;"><span class="ch-dot" style="background:#3d1a78;"></span>最小年轮</td>
+    <td>1289</td>
+    <td class="alert-cell">21.9%</td>
+    <td >52.9%</td>
+    <td>4.7%</td>
   </tr><tr>
-    <td class="td-ch"><span class="ch-dot" style="background:#1a6e3d;"></span>领航</td>
-    <td>529</td><td>394</td><td>91</td><td>438</td>
-    <td >17.2%</td>
-    <td >40.8%</td>
-    <td >17.2%</td>
+    <td style="text-align:left;padding:9px 14px;font-weight:600;"><span class="ch-dot" style="background:#888;"></span>兜底代理</td>
+    <td>1086</td>
+    <td >16.8%</td>
+    <td >46.0%</td>
+    <td>7.7%</td>
   </tr><tr>
-    <td class="td-ch"><span class="ch-dot" style="background:#0d47a1;"></span>格物致知</td>
-    <td>152</td><td>152</td><td>35</td><td>117</td>
-    <td class="alert-cell">23.0%</td>
-    <td >49.3%</td>
-    <td >0.0%</td>
+    <td style="text-align:left;padding:9px 14px;font-weight:600;"><span class="ch-dot" style="background:#1a6e3d;"></span>领航</td>
+    <td>331</td>
+    <td >18.7%</td>
+    <td >38.1%</td>
+    <td>17.5%</td>
   </tr><tr>
-    <td class="td-ch"><span class="ch-dot" style="background:#e65100;"></span>杭州三只咪</td>
-    <td>52</td><td>46</td><td>10</td><td>42</td>
-    <td >19.2%</td>
-    <td >46.2%</td>
-    <td >8.0%</td>
-  </tr><tr>
-    <td class="td-ch"><span class="ch-dot" style="background:#6a1a78;"></span>合肥徽起</td>
-    <td>27</td><td>24</td><td>8</td><td>19</td>
-    <td class="alert-cell">29.6%</td>
-    <td >44.4%</td>
-    <td >0.0%</td>
-  </tr><tr>
-    <td class="td-ch"><span class="ch-dot" style="background:#00838f;"></span>自然流</td>
-    <td>24</td><td>13</td><td>6</td><td>18</td>
-    <td class="alert-cell">25.0%</td>
-    <td >20.8%</td>
-    <td class="alert-cell">35.0%</td>
-  </tr><tr>
-    <td class="td-ch"><span class="ch-dot" style="background:#5d4037;"></span>山东深山</td>
-    <td>11</td><td>8</td><td>3</td><td>8</td>
-    <td class="alert-cell">27.3%</td>
-    <td >72.7%</td>
-    <td >0.0%</td>
-  </tr><tr>
-    <td class="td-ch"><span class="ch-dot" style="background:#1565c0;"></span>文思泉涌</td>
-    <td>3</td><td>0</td><td>0</td><td>3</td>
-    <td >0.0%</td>
-    <td class="alert-cell">0.0%</td>
-    <td class="alert-cell">100.0%</td>
-  </tr><tr>
-    <td class="td-ch"><span class="ch-dot" style="background:#888;"></span>未知渠道</td>
-    <td>1</td><td>0</td><td>1</td><td>0</td>
-    <td class="alert-cell">100.0%</td>
-    <td class="alert-cell">0.0%</td>
-    <td >0.0%</td>
-  </tr></tbody></table></div><h3 class="sub-title">各渠道达人明细</h3><details class="ch-block" open>
+    <td style="text-align:left;padding:9px 14px;font-weight:600;"><span class="ch-dot" style="background:#6a1a78;"></span>合肥徽起</td>
+    <td>15</td>
+    <td class="alert-cell">26.7%</td>
+    <td >46.7%</td>
+    <td>0.0%</td>
+  </tr></tbody></table></div>
+  <h3 class="sub-title">各渠道达人明细</h3>
+  <details class="ch-block" open>
     <summary class="ch-summary" style="border-left:4px solid #3d1a78;">
-      <span class="ch-dot" style="background:#3d1a78;"></span>最小年轮
-      <span class="ch-badge">1530单</span>
-      <span class="ch-badge badge-alert">退款22.6%</span>
-      <span class="ch-badge ">撞库3.0%</span>
+      最小年轮 <span class="ch-badge">1289单</span>
+      <span class="ch-badge" style="background:#fde8e8;color:#c62828;">退款率 21.9%</span>
     </summary>
     <div class="table-wrap" style="border-radius:0 0 8px 8px;">
-    <table class="inf-table" style="min-width:600px;">
+    <table>
       <thead><tr style="background:#ede7f6;color:#4a148c;">
-        <th style="text-align:left;padding-left:8px;">达人</th>
-        <th>总单</th><th>退款单</th><th>未退款</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
-        <th class="mobile-hide">影子占比</th>
-      </tr></thead><tbody><tr>
-      <td class="td-ch">李老师讲初升高</td><td>526</td><td>134</td><td>392</td>
-      <td class="alert-cell">25.5%</td>
-      <td >54.4%</td>
-      <td >3.8%</td>
-      <td class="mobile-hide">3.2%</td>
+        <th>达人名称</th><th>总订单</th><th>退款率</th><th>主动加微率</th><th>影子班占比</th>
+      </tr></thead>
+      <tbody><tr>
+      <td style="text-align:left;padding:8px 14px;">李老师讲初升高</td>
+      <td>433</td>
+      <td class="alert-cell">22.4%</td>
+      <td >50.6%</td>
+      <td>4.6%</td>
     </tr><tr>
-      <td class="td-ch">一线王老师讲选科</td><td>150</td><td>35</td><td>115</td>
-      <td class="alert-cell">23.3%</td>
-      <td >52.7%</td>
-      <td >1.5%</td>
-      <td class="mobile-hide">1.3%</td>
+      <td style="text-align:left;padding:8px 14px;">一线王老师讲选科</td>
+      <td>186</td>
+      <td class="alert-cell">22.6%</td>
+      <td >46.8%</td>
+      <td>1.6%</td>
     </tr><tr>
-      <td class="td-ch">郝老师聊选科-行知</td><td>146</td><td>43</td><td>103</td>
+      <td style="text-align:left;padding:8px 14px;">郝老师聊选科-行知</td>
+      <td>129</td>
       <td class="alert-cell">29.5%</td>
-      <td >61.6%</td>
-      <td >0.8%</td>
-      <td class="mobile-hide">0.7%</td>
+      <td >58.1%</td>
+      <td>5.4%</td>
     </tr><tr>
-      <td class="td-ch">刘老师讲中考a</td><td>112</td><td>24</td><td>88</td>
-      <td class="alert-cell">21.4%</td>
-      <td >58.9%</td>
-      <td >3.8%</td>
-      <td class="mobile-hide">3.6%</td>
+      <td style="text-align:left;padding:8px 14px;">行知老师讲规划</td>
+      <td>99</td>
+      <td class="alert-cell">26.3%</td>
+      <td >53.5%</td>
+      <td>6.1%</td>
     </tr><tr>
-      <td class="td-ch">行知老师讲规划</td><td>104</td><td>24</td><td>80</td>
-      <td class="alert-cell">23.1%</td>
-      <td >59.6%</td>
-      <td >3.3%</td>
-      <td class="mobile-hide">2.9%</td>
+      <td style="text-align:left;padding:8px 14px;">千佰惠公司聂老师</td>
+      <td>93</td>
+      <td class="alert-cell">20.4%</td>
+      <td >55.9%</td>
+      <td>6.5%</td>
     </tr><tr>
-      <td class="td-ch">王老师说选科</td><td>97</td><td>23</td><td>74</td>
-      <td class="alert-cell">23.7%</td>
-      <td >66.0%</td>
-      <td >3.6%</td>
-      <td class="mobile-hide">3.1%</td>
-    </tr><tr>
-      <td class="td-ch">董老师讲选科</td><td>77</td><td>15</td><td>62</td>
-      <td >19.5%</td>
-      <td >67.5%</td>
-      <td >1.5%</td>
-      <td class="mobile-hide">1.3%</td>
-    </tr><tr>
-      <td class="td-ch">田老师讲选科</td><td>66</td><td>13</td><td>53</td>
-      <td >19.7%</td>
-      <td >59.1%</td>
-      <td >4.9%</td>
-      <td class="mobile-hide">4.5%</td>
-    </tr><tr>
-      <td class="td-ch">升学规划.田雨</td><td>65</td><td>3</td><td>62</td>
-      <td >4.6%</td>
-      <td >46.2%</td>
-      <td >1.6%</td>
-      <td class="mobile-hide">1.5%</td>
-    </tr><tr>
-      <td class="td-ch">孙老师思维课堂-一起考</td><td>46</td><td>12</td><td>34</td>
-      <td class="alert-cell">26.1%</td>
-      <td >60.9%</td>
-      <td >2.5%</td>
-      <td class="mobile-hide">2.2%</td>
-    </tr><tr>
-      <td class="td-ch">珊伊老师讲高考</td><td>33</td><td>3</td><td>30</td>
-      <td >9.1%</td>
-      <td >48.5%</td>
-      <td >9.1%</td>
-      <td class="mobile-hide">9.1%</td>
-    </tr><tr>
-      <td class="td-ch">晶晶老师升学规划</td><td>32</td><td>2</td><td>30</td>
-      <td >6.3%</td>
-      <td >59.4%</td>
-      <td >3.2%</td>
-      <td class="mobile-hide">3.1%</td>
-    </tr><tr>
-      <td class="td-ch">千佰惠公司聂老师</td><td>25</td><td>5</td><td>20</td>
-      <td >20.0%</td>
-      <td >24.0%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
-    </tr><tr>
-      <td class="td-ch">唐老师高考规划</td><td>11</td><td>2</td><td>9</td>
-      <td >18.2%</td>
-      <td >36.4%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
-    </tr><tr>
-      <td class="td-ch">黄老师讲选科</td><td>11</td><td>2</td><td>9</td>
-      <td >18.2%</td>
-      <td >54.5%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
-    </tr><tr>
-      <td class="td-ch">超超老师讲选科</td><td>7</td><td>0</td><td>7</td>
-      <td >0.0%</td>
-      <td >42.9%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
-    </tr><tr>
-      <td class="td-ch">中考志愿填报刘老师</td><td>4</td><td>0</td><td>4</td>
-      <td >0.0%</td>
-      <td >75.0%</td>
-      <td class="alert-cell">25.0%</td>
-      <td class="mobile-hide">25.0%</td>
-    </tr><tr>
-      <td class="td-ch">金榜题名</td><td>4</td><td>1</td><td>3</td>
-      <td class="alert-cell">25.0%</td>
-      <td >25.0%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
-    </tr><tr>
-      <td class="td-ch">赵老师讲选科</td><td>3</td><td>0</td><td>3</td>
-      <td >0.0%</td>
-      <td >33.3%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
-    </tr><tr>
-      <td class="td-ch">郑州中考大实话</td><td>3</td><td>1</td><td>2</td>
-      <td class="alert-cell">33.3%</td>
-      <td >33.3%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
-    </tr><tr>
-      <td class="td-ch">刘老师升学规划(升知维)</td><td>3</td><td>2</td><td>1</td>
-      <td class="alert-cell">66.7%</td>
-      <td >33.3%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
-    </tr><tr>
-      <td class="td-ch">邬老师讲规划</td><td>2</td><td>0</td><td>2</td>
-      <td >0.0%</td>
-      <td >100.0%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
-    </tr><tr>
-      <td class="td-ch">李老师讲升学规划</td><td>2</td><td>2</td><td>0</td>
-      <td class="alert-cell">100.0%</td>
-      <td class="alert-cell">0.0%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
-    </tr><tr>
-      <td class="td-ch">刘老师讲中考</td><td>1</td><td>0</td><td>1</td>
-      <td >0.0%</td>
-      <td class="alert-cell">0.0%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
-    </tr></tbody></table></div></details><details class="ch-block" open>
-    <summary class="ch-summary" style="border-left:4px solid #1a6e3d;">
-      <span class="ch-dot" style="background:#1a6e3d;"></span>领航
-      <span class="ch-badge">529单</span>
-      <span class="ch-badge ">退款17.2%</span>
-      <span class="ch-badge ">撞库17.2%</span>
-    </summary>
-    <div class="table-wrap" style="border-radius:0 0 8px 8px;">
-    <table class="inf-table" style="min-width:600px;">
-      <thead><tr style="background:#ede7f6;color:#4a148c;">
-        <th style="text-align:left;padding-left:8px;">达人</th>
-        <th>总单</th><th>退款单</th><th>未退款</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
-        <th class="mobile-hide">影子占比</th>
-      </tr></thead><tbody><tr>
-      <td class="td-ch">高中班主任张老师升学</td><td>69</td><td>5</td><td>64</td>
-      <td >7.2%</td>
-      <td >20.3%</td>
-      <td class="alert-cell">33.3%</td>
-      <td class="mobile-hide">31.9%</td>
-    </tr><tr>
-      <td class="td-ch">刘老师升学规划</td><td>68</td><td>5</td><td>63</td>
-      <td >7.4%</td>
-      <td >30.9%</td>
-      <td class="alert-cell">27.3%</td>
-      <td class="mobile-hide">26.5%</td>
-    </tr><tr>
-      <td class="td-ch">升学规划雯老师-泓图</td><td>66</td><td>22</td><td>44</td>
-      <td class="alert-cell">33.3%</td>
-      <td >57.6%</td>
-      <td >3.3%</td>
-      <td class="mobile-hide">3.0%</td>
-    </tr><tr>
-      <td class="td-ch">陈老师升学规划</td><td>63</td><td>4</td><td>59</td>
-      <td >6.3%</td>
-      <td >31.7%</td>
-      <td >13.1%</td>
-      <td class="mobile-hide">12.7%</td>
-    </tr><tr>
-      <td class="td-ch">高中生升学规划</td><td>60</td><td>2</td><td>58</td>
-      <td >3.3%</td>
-      <td >36.7%</td>
-      <td class="alert-cell">32.8%</td>
-      <td class="mobile-hide">31.7%</td>
-    </tr><tr>
-      <td class="td-ch">升学规划白老师</td><td>41</td><td>3</td><td>38</td>
-      <td >7.3%</td>
-      <td >36.6%</td>
-      <td class="alert-cell">25.6%</td>
-      <td class="mobile-hide">24.4%</td>
-    </tr><tr>
-      <td class="td-ch">马老师升学规划</td><td>40</td><td>11</td><td>29</td>
-      <td class="alert-cell">27.5%</td>
-      <td >47.5%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
-    </tr><tr>
-      <td class="td-ch">赵主任讲女生规划</td><td>30</td><td>5</td><td>25</td>
-      <td >16.7%</td>
+      <td style="text-align:left;padding:8px 14px;">王老师说选科</td>
+      <td>72</td>
+      <td class="alert-cell">23.6%</td>
       <td >66.7%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
+      <td>5.6%</td>
     </tr><tr>
-      <td class="td-ch">王老师聊高考规划</td><td>23</td><td>16</td><td>7</td>
-      <td class="alert-cell">69.6%</td>
-      <td >47.8%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
+      <td style="text-align:left;padding:8px 14px;">田老师讲选科</td>
+      <td>66</td>
+      <td class="alert-cell">22.7%</td>
+      <td >54.5%</td>
+      <td>4.5%</td>
     </tr><tr>
-      <td class="td-ch">郑州中考规划</td><td>23</td><td>9</td><td>14</td>
-      <td class="alert-cell">39.1%</td>
-      <td >52.2%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
+      <td style="text-align:left;padding:8px 14px;">董老师讲选科</td>
+      <td>62</td>
+      <td >16.1%</td>
+      <td >62.9%</td>
+      <td>1.6%</td>
     </tr><tr>
-      <td class="td-ch">昭昭老师讲升学</td><td>17</td><td>5</td><td>12</td>
-      <td class="alert-cell">29.4%</td>
-      <td >58.8%</td>
-      <td >12.5%</td>
-      <td class="mobile-hide">11.8%</td>
+      <td style="text-align:left;padding:8px 14px;">晶晶老师升学规划</td>
+      <td>40</td>
+      <td >7.5%</td>
+      <td >55.0%</td>
+      <td>5.0%</td>
     </tr><tr>
-      <td class="td-ch">小满老师讲选科规划🎓</td><td>11</td><td>1</td><td>10</td>
-      <td >9.1%</td>
-      <td >63.6%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
+      <td style="text-align:left;padding:8px 14px;">珊伊老师讲高考</td>
+      <td>39</td>
+      <td >17.9%</td>
+      <td >46.2%</td>
+      <td>7.7%</td>
     </tr><tr>
-      <td class="td-ch">张利老师聊升学（慧润文化）</td><td>8</td><td>0</td><td>8</td>
+      <td style="text-align:left;padding:8px 14px;">孙老师思维课堂-一起考</td>
+      <td>30</td>
+      <td class="alert-cell">23.3%</td>
+      <td >56.7%</td>
+      <td>3.3%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">蔡稳稳</td>
+      <td>29</td>
+      <td >3.4%</td>
+      <td >44.8%</td>
+      <td>3.4%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">高阶三规划</td>
+      <td>5</td>
       <td >0.0%</td>
+      <td >20.0%</td>
+      <td>0.0%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">赵老师讲选科</td>
+      <td>4</td>
+      <td >0.0%</td>
+      <td >25.0%</td>
+      <td>75.0%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">许老师清北思维</td>
+      <td>1</td>
+      <td >0.0%</td>
+      <td class="alert-cell">0.0%</td>
+      <td>0.0%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">升学规划成丰袁老师</td>
+      <td>1</td>
+      <td >0.0%</td>
+      <td >100.0%</td>
+      <td>0.0%</td>
+    </tr></tbody></table></div></details>
+  <details class="ch-block" open>
+    <summary class="ch-summary" style="border-left:4px solid #888;">
+      兜底代理 <span class="ch-badge">1086单</span>
+      <span class="ch-badge" style="">退款率 16.8%</span>
+    </summary>
+    <div class="table-wrap" style="border-radius:0 0 8px 8px;">
+    <table>
+      <thead><tr style="background:#ede7f6;color:#4a148c;">
+        <th>达人名称</th><th>总订单</th><th>退款率</th><th>主动加微率</th><th>影子班占比</th>
+      </tr></thead>
+      <tbody><tr>
+      <td style="text-align:left;padding:8px 14px;">樊老师读书分享</td>
+      <td>239</td>
+      <td >14.6%</td>
+      <td >45.6%</td>
+      <td>3.3%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">刘老师讲中考a</td>
+      <td>141</td>
+      <td class="alert-cell">27.0%</td>
+      <td >53.9%</td>
+      <td>6.4%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">文老师升学规划课堂</td>
+      <td>118</td>
+      <td class="alert-cell">21.2%</td>
+      <td >52.5%</td>
+      <td>4.2%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">刘主任升学问答（哔哒教育）</td>
+      <td>116</td>
+      <td >17.2%</td>
+      <td >49.1%</td>
+      <td>5.2%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">未知达人</td>
+      <td>88</td>
+      <td class="alert-cell">21.6%</td>
       <td >37.5%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
+      <td>20.5%</td>
     </tr><tr>
-      <td class="td-ch">湖南高考老师 985</td><td>3</td><td>1</td><td>2</td>
-      <td class="alert-cell">33.3%</td>
-      <td >33.3%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
+      <td style="text-align:left;padding:8px 14px;">升学规划.田雨</td>
+      <td>71</td>
+      <td >2.8%</td>
+      <td >42.3%</td>
+      <td>5.6%</td>
     </tr><tr>
-      <td class="td-ch">大王老师说郑州升学</td><td>3</td><td>0</td><td>3</td>
-      <td >0.0%</td>
-      <td >33.3%</td>
-      <td class="alert-cell">33.3%</td>
-      <td class="mobile-hide">33.3%</td>
+      <td style="text-align:left;padding:8px 14px;">步步高就-聊聊初升高</td>
+      <td>67</td>
+      <td >16.4%</td>
+      <td >46.3%</td>
+      <td>6.0%</td>
     </tr><tr>
-      <td class="td-ch">宋老师聊升学</td><td>1</td><td>0</td><td>1</td>
-      <td >0.0%</td>
-      <td >100.0%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
+      <td style="text-align:left;padding:8px 14px;">刘老师升学规划</td>
+      <td>56</td>
+      <td >12.5%</td>
+      <td >26.8%</td>
+      <td>33.9%</td>
     </tr><tr>
-      <td class="td-ch">高中升学规划</td><td>1</td><td>0</td><td>1</td>
-      <td >0.0%</td>
-      <td >100.0%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
+      <td style="text-align:left;padding:8px 14px;">刘老师思维课堂88</td>
+      <td>50</td>
+      <td >12.0%</td>
+      <td >44.0%</td>
+      <td>4.0%</td>
     </tr><tr>
-      <td class="td-ch">山西升学于老师</td><td>1</td><td>1</td><td>0</td>
-      <td class="alert-cell">100.0%</td>
+      <td style="text-align:left;padding:8px 14px;">赵主任讲女生规划</td>
+      <td>46</td>
+      <td >10.9%</td>
+      <td >45.7%</td>
+      <td>4.3%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">初升高升学规划</td>
+      <td>20</td>
+      <td >5.0%</td>
+      <td >30.0%</td>
+      <td>10.0%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">初升高升学规划.</td>
+      <td>12</td>
+      <td >0.0%</td>
+      <td >66.7%</td>
+      <td>8.3%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">小满老师思维课堂</td>
+      <td>11</td>
+      <td >18.2%</td>
+      <td >63.6%</td>
+      <td>27.3%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">黄老师讲选科</td>
+      <td>9</td>
+      <td class="alert-cell">22.2%</td>
+      <td >66.7%</td>
+      <td>0.0%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">宁老师讲选科</td>
+      <td>8</td>
+      <td class="alert-cell">25.0%</td>
+      <td >37.5%</td>
+      <td>0.0%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">张老师高考规划</td>
+      <td>7</td>
+      <td >0.0%</td>
       <td class="alert-cell">0.0%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
+      <td>0.0%</td>
     </tr><tr>
-      <td class="td-ch">方老师讲升学规划</td><td>1</td><td>1</td><td>0</td>
-      <td class="alert-cell">100.0%</td>
-      <td class="alert-cell">0.0%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
-    </tr></tbody></table></div></details><details class="ch-block" open>
-    <summary class="ch-summary" style="border-left:4px solid #0d47a1;">
-      <span class="ch-dot" style="background:#0d47a1;"></span>格物致知
-      <span class="ch-badge">152单</span>
-      <span class="ch-badge badge-alert">退款23.0%</span>
-      <span class="ch-badge ">撞库0.0%</span>
-    </summary>
-    <div class="table-wrap" style="border-radius:0 0 8px 8px;">
-    <table class="inf-table" style="min-width:600px;">
-      <thead><tr style="background:#ede7f6;color:#4a148c;">
-        <th style="text-align:left;padding-left:8px;">达人</th>
-        <th>总单</th><th>退款单</th><th>未退款</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
-        <th class="mobile-hide">影子占比</th>
-      </tr></thead><tbody><tr>
-      <td class="td-ch">樊老师读书分享</td><td>92</td><td>18</td><td>74</td>
-      <td >19.6%</td>
-      <td >46.7%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
-    </tr><tr>
-      <td class="td-ch">文老师升学规划课堂</td><td>60</td><td>17</td><td>43</td>
-      <td class="alert-cell">28.3%</td>
-      <td >53.3%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
-    </tr></tbody></table></div></details><details class="ch-block" open>
-    <summary class="ch-summary" style="border-left:4px solid #e65100;">
-      <span class="ch-dot" style="background:#e65100;"></span>杭州三只咪
-      <span class="ch-badge">52单</span>
-      <span class="ch-badge ">退款19.2%</span>
-      <span class="ch-badge ">撞库8.0%</span>
-    </summary>
-    <div class="table-wrap" style="border-radius:0 0 8px 8px;">
-    <table class="inf-table" style="min-width:600px;">
-      <thead><tr style="background:#ede7f6;color:#4a148c;">
-        <th style="text-align:left;padding-left:8px;">达人</th>
-        <th>总单</th><th>退款单</th><th>未退款</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
-        <th class="mobile-hide">影子占比</th>
-      </tr></thead><tbody><tr>
-      <td class="td-ch">刘老师思维课堂88</td><td>29</td><td>3</td><td>26</td>
-      <td >10.3%</td>
-      <td >41.4%</td>
-      <td >3.6%</td>
-      <td class="mobile-hide">3.4%</td>
-    </tr><tr>
-      <td class="td-ch">小满老师思维课堂</td><td>8</td><td>2</td><td>6</td>
+      <td style="text-align:left;padding:8px 14px;">浙大奥数张老师</td>
+      <td>4</td>
       <td class="alert-cell">25.0%</td>
       <td >75.0%</td>
-      <td >12.5%</td>
-      <td class="mobile-hide">12.5%</td>
+      <td>0.0%</td>
     </tr><tr>
-      <td class="td-ch">罗老师讲思维（三只咪 ）</td><td>6</td><td>4</td><td>2</td>
-      <td class="alert-cell">66.7%</td>
-      <td >50.0%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
-    </tr><tr>
-      <td class="td-ch">浙大奥数张老师</td><td>4</td><td>1</td><td>3</td>
-      <td class="alert-cell">25.0%</td>
-      <td >50.0%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
-    </tr><tr>
-      <td class="td-ch">韩老师满分思维课</td><td>2</td><td>0</td><td>2</td>
-      <td >0.0%</td>
-      <td >50.0%</td>
+      <td style="text-align:left;padding:8px 14px;">昭昭老师讲升学</td>
+      <td>4</td>
       <td class="alert-cell">50.0%</td>
-      <td class="mobile-hide">50.0%</td>
+      <td >75.0%</td>
+      <td>0.0%</td>
     </tr><tr>
-      <td class="td-ch">北大奥数珊珊老师1</td><td>2</td><td>0</td><td>2</td>
+      <td style="text-align:left;padding:8px 14px;">罗老师讲思维（三只咪 ）</td>
+      <td>3</td>
+      <td class="alert-cell">66.7%</td>
+      <td >33.3%</td>
+      <td>0.0%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">超超老师讲选科</td>
+      <td>3</td>
+      <td class="alert-cell">33.3%</td>
+      <td >33.3%</td>
+      <td>0.0%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">韩老师满分思维课</td>
+      <td>2</td>
+      <td >0.0%</td>
+      <td >100.0%</td>
+      <td>0.0%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">浙大奥数莉莉老师</td>
+      <td>2</td>
+      <td >0.0%</td>
+      <td >50.0%</td>
+      <td>0.0%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">北大奥数珊珊老师1</td>
+      <td>2</td>
       <td >0.0%</td>
       <td class="alert-cell">0.0%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
+      <td>0.0%</td>
     </tr><tr>
-      <td class="td-ch">宋老师思维学习力</td><td>1</td><td>0</td><td>1</td>
+      <td style="text-align:left;padding:8px 14px;">宋老师思维学习力</td>
+      <td>2</td>
       <td >0.0%</td>
-      <td class="alert-cell">0.0%</td>
+      <td >50.0%</td>
+      <td>50.0%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">数学许老师</td>
+      <td>1</td>
       <td class="alert-cell">100.0%</td>
-      <td class="mobile-hide">100.0%</td>
-    </tr></tbody></table></div></details><details class="ch-block" open>
-    <summary class="ch-summary" style="border-left:4px solid #6a1a78;">
-      <span class="ch-dot" style="background:#6a1a78;"></span>合肥徽起
-      <span class="ch-badge">27单</span>
-      <span class="ch-badge badge-alert">退款29.6%</span>
-      <span class="ch-badge ">撞库0.0%</span>
+      <td class="alert-cell">0.0%</td>
+      <td>0.0%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">刘老师讲中考</td>
+      <td>1</td>
+      <td >0.0%</td>
+      <td class="alert-cell">0.0%</td>
+      <td>0.0%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">浙大奥数陈老师</td>
+      <td>1</td>
+      <td >0.0%</td>
+      <td >100.0%</td>
+      <td>0.0%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">魏老师思维课堂999</td>
+      <td>1</td>
+      <td >0.0%</td>
+      <td class="alert-cell">0.0%</td>
+      <td>0.0%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">姗姗老师1129</td>
+      <td>1</td>
+      <td >0.0%</td>
+      <td >100.0%</td>
+      <td>0.0%</td>
+    </tr></tbody></table></div></details>
+  <details class="ch-block" open>
+    <summary class="ch-summary" style="border-left:4px solid #1a6e3d;">
+      领航 <span class="ch-badge">331单</span>
+      <span class="ch-badge" style="">退款率 18.7%</span>
     </summary>
     <div class="table-wrap" style="border-radius:0 0 8px 8px;">
-    <table class="inf-table" style="min-width:600px;">
+    <table>
       <thead><tr style="background:#ede7f6;color:#4a148c;">
-        <th style="text-align:left;padding-left:8px;">达人</th>
-        <th>总单</th><th>退款单</th><th>未退款</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
-        <th class="mobile-hide">影子占比</th>
-      </tr></thead><tbody><tr>
-      <td class="td-ch">初升高入团规划大课堂</td><td>26</td><td>7</td><td>19</td>
-      <td class="alert-cell">26.9%</td>
-      <td >42.3%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
+        <th>达人名称</th><th>总订单</th><th>退款率</th><th>主动加微率</th><th>影子班占比</th>
+      </tr></thead>
+      <tbody><tr>
+      <td style="text-align:left;padding:8px 14px;">升学规划雯老师-泓图</td>
+      <td>86</td>
+      <td class="alert-cell">29.1%</td>
+      <td >54.7%</td>
+      <td>2.3%</td>
     </tr><tr>
-      <td class="td-ch">铁饭碗规划专场</td><td>1</td><td>1</td><td>0</td>
+      <td style="text-align:left;padding:8px 14px;">高中班主任张老师升学</td>
+      <td>55</td>
+      <td >5.5%</td>
+      <td >16.4%</td>
+      <td>32.7%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">马老师升学规划</td>
+      <td>53</td>
+      <td class="alert-cell">39.6%</td>
+      <td >45.3%</td>
+      <td>3.8%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">高中生升学规划</td>
+      <td>51</td>
+      <td >5.9%</td>
+      <td >27.5%</td>
+      <td>54.9%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">陈老师升学规划</td>
+      <td>49</td>
+      <td >10.2%</td>
+      <td >36.7%</td>
+      <td>6.1%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">升学规划白老师</td>
+      <td>22</td>
+      <td >9.1%</td>
+      <td >45.5%</td>
+      <td>22.7%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">小满老师讲选科规划🎓</td>
+      <td>12</td>
+      <td >8.3%</td>
+      <td >25.0%</td>
+      <td>0.0%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">高中升学规划</td>
+      <td>1</td>
+      <td >0.0%</td>
+      <td >100.0%</td>
+      <td>0.0%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">山西升学于老师</td>
+      <td>1</td>
+      <td class="alert-cell">100.0%</td>
+      <td class="alert-cell">0.0%</td>
+      <td>0.0%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">付老师生涯规划</td>
+      <td>1</td>
+      <td class="alert-cell">100.0%</td>
+      <td class="alert-cell">0.0%</td>
+      <td>0.0%</td>
+    </tr></tbody></table></div></details>
+  <details class="ch-block" open>
+    <summary class="ch-summary" style="border-left:4px solid #6a1a78;">
+      合肥徽起 <span class="ch-badge">15单</span>
+      <span class="ch-badge" style="background:#fde8e8;color:#c62828;">退款率 26.7%</span>
+    </summary>
+    <div class="table-wrap" style="border-radius:0 0 8px 8px;">
+    <table>
+      <thead><tr style="background:#ede7f6;color:#4a148c;">
+        <th>达人名称</th><th>总订单</th><th>退款率</th><th>主动加微率</th><th>影子班占比</th>
+      </tr></thead>
+      <tbody><tr>
+      <td style="text-align:left;padding:8px 14px;">初升高入团规划大课堂</td>
+      <td>14</td>
+      <td class="alert-cell">21.4%</td>
+      <td >42.9%</td>
+      <td>0.0%</td>
+    </tr><tr>
+      <td style="text-align:left;padding:8px 14px;">铁饭碗规划专场</td>
+      <td>1</td>
       <td class="alert-cell">100.0%</td>
       <td >100.0%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
-    </tr></tbody></table></div></details><details class="ch-block" open>
-    <summary class="ch-summary" style="border-left:4px solid #00838f;">
-      <span class="ch-dot" style="background:#00838f;"></span>自然流
-      <span class="ch-badge">24单</span>
-      <span class="ch-badge badge-alert">退款25.0%</span>
-      <span class="ch-badge badge-alert">撞库35.0%</span>
-    </summary>
-    <div class="table-wrap" style="border-radius:0 0 8px 8px;">
-    <table class="inf-table" style="min-width:600px;">
-      <thead><tr style="background:#ede7f6;color:#4a148c;">
-        <th style="text-align:left;padding-left:8px;">达人</th>
-        <th>总单</th><th>退款单</th><th>未退款</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
-        <th class="mobile-hide">影子占比</th>
-      </tr></thead><tbody><tr>
-      <td class="td-ch">自然流</td><td>24</td><td>6</td><td>18</td>
-      <td class="alert-cell">25.0%</td>
-      <td >20.8%</td>
-      <td class="alert-cell">35.0%</td>
-      <td class="mobile-hide">29.2%</td>
-    </tr></tbody></table></div></details><details class="ch-block" open>
-    <summary class="ch-summary" style="border-left:4px solid #5d4037;">
-      <span class="ch-dot" style="background:#5d4037;"></span>山东深山
-      <span class="ch-badge">11单</span>
-      <span class="ch-badge badge-alert">退款27.3%</span>
-      <span class="ch-badge ">撞库0.0%</span>
-    </summary>
-    <div class="table-wrap" style="border-radius:0 0 8px 8px;">
-    <table class="inf-table" style="min-width:600px;">
-      <thead><tr style="background:#ede7f6;color:#4a148c;">
-        <th style="text-align:left;padding-left:8px;">达人</th>
-        <th>总单</th><th>退款单</th><th>未退款</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
-        <th class="mobile-hide">影子占比</th>
-      </tr></thead><tbody><tr>
-      <td class="td-ch">徐老师讲升学(欢喜）</td><td>11</td><td>3</td><td>8</td>
-      <td class="alert-cell">27.3%</td>
-      <td >72.7%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
-    </tr></tbody></table></div></details><details class="ch-block" open>
-    <summary class="ch-summary" style="border-left:4px solid #1565c0;">
-      <span class="ch-dot" style="background:#1565c0;"></span>文思泉涌
-      <span class="ch-badge">3单</span>
-      <span class="ch-badge ">退款0.0%</span>
-      <span class="ch-badge badge-alert">撞库100.0%</span>
-    </summary>
-    <div class="table-wrap" style="border-radius:0 0 8px 8px;">
-    <table class="inf-table" style="min-width:600px;">
-      <thead><tr style="background:#ede7f6;color:#4a148c;">
-        <th style="text-align:left;padding-left:8px;">达人</th>
-        <th>总单</th><th>退款单</th><th>未退款</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
-        <th class="mobile-hide">影子占比</th>
-      </tr></thead><tbody><tr>
-      <td class="td-ch">如愿升学规划指导号</td><td>2</td><td>0</td><td>2</td>
-      <td >0.0%</td>
-      <td class="alert-cell">0.0%</td>
-      <td class="alert-cell">100.0%</td>
-      <td class="mobile-hide">100.0%</td>
-    </tr><tr>
-      <td class="td-ch">升学与规划</td><td>1</td><td>0</td><td>1</td>
-      <td >0.0%</td>
-      <td class="alert-cell">0.0%</td>
-      <td class="alert-cell">100.0%</td>
-      <td class="mobile-hide">100.0%</td>
-    </tr></tbody></table></div></details><details class="ch-block" open>
-    <summary class="ch-summary" style="border-left:4px solid #888;">
-      <span class="ch-dot" style="background:#888;"></span>未知渠道
-      <span class="ch-badge">1单</span>
-      <span class="ch-badge badge-alert">退款100.0%</span>
-      <span class="ch-badge ">撞库0.0%</span>
-    </summary>
-    <div class="table-wrap" style="border-radius:0 0 8px 8px;">
-    <table class="inf-table" style="min-width:600px;">
-      <thead><tr style="background:#ede7f6;color:#4a148c;">
-        <th style="text-align:left;padding-left:8px;">达人</th>
-        <th>总单</th><th>退款单</th><th>未退款</th><th>退款率</th><th>主动加微率</th><th>撞库率</th>
-        <th class="mobile-hide">影子占比</th>
-      </tr></thead><tbody><tr>
-      <td class="td-ch">数学许老师</td><td>1</td><td>1</td><td>0</td>
-      <td class="alert-cell">100.0%</td>
-      <td class="alert-cell">0.0%</td>
-      <td >0.0%</td>
-      <td class="mobile-hide">0.0%</td>
-    </tr></tbody></table></div></details></div><div id="grade" class="section"><h2 class="sec-title">② 分年级进量（正常班）</h2>
-  <div class="table-wrap"><table><thead><tr class="thead-blue"><th>年级</th><th>03-14</th><th>04-24</th><th>04-26</th><th>04-27</th><th>04-28</th><th>04-29</th><th>04-30</th><th>05-01</th><th>05-02</th><th>05-03</th><th>05-04</th><th>05-05</th><th>合计</th><th>占比</th></tr></thead><tbody><tr><td class="td-ch">初三↑高一</td><td>1</td><td>0</td><td>1</td><td>0</td><td>87</td><td>178</td><td>92</td><td>176</td><td>259</td><td>241</td><td>301</td><td>179</td><td><b>1515</b></td><td>77.8%</td></tr><tr><td class="td-ch">高一↑高二</td><td>0</td><td>0</td><td>0</td><td>0</td><td>9</td><td>41</td><td>29</td><td>31</td><td>64</td><td>54</td><td>44</td><td>0</td><td><b>272</b></td><td>14.0%</td></tr><tr><td class="td-ch">高二↑高三</td><td>0</td><td>0</td><td>0</td><td>0</td><td>3</td><td>26</td><td>19</td><td>19</td><td>25</td><td>32</td><td>12</td><td>25</td><td><b>161</b></td><td>8.3%</td></tr><tr class="thead-blue" style="font-weight:800;"><td class="td-ch">总计</td><td>1</td><td>0</td><td>1</td><td>0</td><td>99</td><td>245</td><td>140</td><td>226</td><td>348</td><td>327</td><td>357</td><td>204</td><td>1948</td><td>100%</td></tr></tbody></table></div></div><div id="channel-date" class="section"><h2 class="sec-title">③ 渠道×日期（正常班）</h2>
-  <div class="table-wrap"><table><thead><tr class="thead-green"><th>渠道/达人</th><th>03-14</th><th>04-24</th><th>04-26</th><th>04-27</th><th>04-28</th><th>04-29</th><th>04-30</th><th>05-01</th><th>05-02</th><th>05-03</th><th>05-04</th><th>05-05</th><th>合计</th></tr></thead><tbody><tr style="background:#d4edda;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#3d1a78;"></span>最小年轮</td><td>1</td><td>0</td><td>1</td><td>0</td><td>61</td><td>178</td><td>86</td><td>161</td><td>267</td><td>241</td><td>191</td><td>124</td><td><b>1311</b></td></tr><tr><td class="td-ch td-indent">李老师讲初升高</td><td>0</td><td>0</td><td>0</td><td>0</td><td>18</td><td>74</td><td>44</td><td>61</td><td>94</td><td>70</td><td>68</td><td>0</td><td>429</td></tr><tr><td class="td-ch td-indent">一线王老师讲选科</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>25</td><td>17</td><td>0</td><td>22</td><td>24</td><td>25</td><td>19</td><td>133</td></tr><tr><td class="td-ch td-indent">郝老师聊选科-行知</td><td>1</td><td>0</td><td>1</td><td>0</td><td>11</td><td>13</td><td>5</td><td>12</td><td>17</td><td>37</td><td>19</td><td>11</td><td>127</td></tr><tr><td class="td-ch td-indent">刘老师讲中考a</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>23</td><td>31</td><td>28</td><td>15</td><td>4</td><td>101</td></tr><tr><td class="td-ch td-indent">行知老师讲规划</td><td>0</td><td>0</td><td>0</td><td>0</td><td>6</td><td>9</td><td>0</td><td>17</td><td>15</td><td>13</td><td>13</td><td>15</td><td>88</td></tr><tr><td class="td-ch td-indent">王老师说选科</td><td>0</td><td>0</td><td>0</td><td>0</td><td>8</td><td>10</td><td>0</td><td>9</td><td>20</td><td>14</td><td>8</td><td>11</td><td>80</td></tr><tr><td class="td-ch td-indent">董老师讲选科</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>16</td><td>4</td><td>12</td><td>8</td><td>9</td><td>9</td><td>7</td><td>65</td></tr><tr><td class="td-ch td-indent">升学规划.田雨</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>12</td><td>15</td><td>13</td><td>10</td><td>13</td><td>63</td></tr><tr><td class="td-ch td-indent">田老师讲选科</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td><td>8</td><td>2</td><td>4</td><td>14</td><td>3</td><td>15</td><td>10</td><td>58</td></tr><tr><td class="td-ch td-indent">孙老师思维课堂-一起考</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td><td>8</td><td>15</td><td>14</td><td>0</td><td>0</td><td>39</td></tr><tr><td class="td-ch td-indent">珊伊老师讲高考</td><td>0</td><td>0</td><td>0</td><td>0</td><td>4</td><td>6</td><td>5</td><td>0</td><td>4</td><td>5</td><td>5</td><td>1</td><td>30</td></tr><tr><td class="td-ch td-indent">晶晶老师升学规划</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td><td>5</td><td>4</td><td>0</td><td>5</td><td>6</td><td>3</td><td>5</td><td>30</td></tr><tr><td class="td-ch td-indent">千佰惠公司聂老师</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>25</td><td>25</td></tr><tr><td class="td-ch td-indent">黄老师讲选科</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>3</td><td>6</td><td>0</td><td>1</td><td>1</td><td>11</td></tr><tr><td class="td-ch td-indent">唐老师高考规划</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td><td>7</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>9</td></tr><tr><td class="td-ch td-indent">超超老师讲选科</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>5</td><td>0</td><td>2</td><td>7</td></tr><tr><td class="td-ch td-indent">赵老师讲选科</td><td>0</td><td>0</td><td>0</td><td>0</td><td>3</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>3</td></tr><tr><td class="td-ch td-indent">金榜题名</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>3</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>3</td></tr><tr><td class="td-ch td-indent">中考志愿填报刘老师</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>3</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>3</td></tr><tr><td class="td-ch td-indent">邬老师讲规划</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td></tr><tr><td class="td-ch td-indent">郑州中考大实话</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td></tr><tr><td class="td-ch td-indent">刘老师升学规划(升知维)</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td></tr><tr><td class="td-ch td-indent">刘老师讲中考</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td></tr><tr style="background:#d4edda;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#1a6e3d;"></span>领航</td><td>0</td><td>0</td><td>0</td><td>0</td><td>31</td><td>60</td><td>47</td><td>55</td><td>65</td><td>47</td><td>46</td><td>43</td><td><b>394</b></td></tr><tr><td class="td-ch td-indent">升学规划雯老师-泓图</td><td>0</td><td>0</td><td>0</td><td>0</td><td>3</td><td>2</td><td>7</td><td>8</td><td>11</td><td>15</td><td>9</td><td>4</td><td>59</td></tr><tr><td class="td-ch td-indent">陈老师升学规划</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>5</td><td>7</td><td>4</td><td>10</td><td>9</td><td>9</td><td>8</td><td>53</td></tr><tr><td class="td-ch td-indent">刘老师升学规划</td><td>0</td><td>0</td><td>0</td><td>0</td><td>5</td><td>5</td><td>4</td><td>10</td><td>11</td><td>6</td><td>5</td><td>2</td><td>48</td></tr><tr><td class="td-ch td-indent">高中班主任张老师升学</td><td>0</td><td>0</td><td>0</td><td>0</td><td>4</td><td>5</td><td>3</td><td>4</td><td>10</td><td>6</td><td>9</td><td>3</td><td>44</td></tr><tr><td class="td-ch td-indent">高中生升学规划</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>4</td><td>8</td><td>10</td><td>4</td><td>4</td><td>6</td><td>3</td><td>39</td></tr><tr><td class="td-ch td-indent">马老师升学规划</td><td>0</td><td>0</td><td>0</td><td>0</td><td>4</td><td>3</td><td>3</td><td>6</td><td>4</td><td>5</td><td>3</td><td>7</td><td>35</td></tr><tr><td class="td-ch td-indent">升学规划白老师</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>5</td><td>4</td><td>10</td><td>4</td><td>0</td><td>0</td><td>6</td><td>29</td></tr><tr><td class="td-ch td-indent">赵主任讲女生规划</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>7</td><td>9</td><td>0</td><td>0</td><td>0</td><td>0</td><td>9</td><td>25</td></tr><tr><td class="td-ch td-indent">郑州中考规划</td><td>0</td><td>0</td><td>0</td><td>0</td><td>10</td><td>5</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>15</td></tr><tr><td class="td-ch td-indent">昭昭老师讲升学</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>10</td><td>1</td><td>3</td><td>0</td><td>14</td></tr><tr><td class="td-ch td-indent">小满老师讲选科规划🎓</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>6</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>11</td></tr><tr><td class="td-ch td-indent">张利老师聊升学（慧润文化）</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>5</td><td>0</td><td>3</td><td>0</td><td>0</td><td>0</td><td>0</td><td>8</td></tr><tr><td class="td-ch td-indent">王老师聊高考规划</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>5</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>7</td></tr><tr><td class="td-ch td-indent">湖南高考老师 985</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td></tr><tr><td class="td-ch td-indent">大王老师说郑州升学</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td></tr><tr><td class="td-ch td-indent">宋老师聊升学</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr><tr><td class="td-ch td-indent">高中升学规划</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td></tr><tr><td class="td-ch td-indent">山西升学于老师</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr><tr style="background:#d4edda;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#0d47a1;"></span>格物致知</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>27</td><td>94</td><td>31</td><td><b>152</b></td></tr><tr><td class="td-ch td-indent">樊老师读书分享</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>17</td><td>74</td><td>1</td><td>92</td></tr><tr><td class="td-ch td-indent">文老师升学规划课堂</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>10</td><td>20</td><td>30</td><td>60</td></tr><tr style="background:#d4edda;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#e65100;"></span>杭州三只咪</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td><td>2</td><td>9</td><td>5</td><td>22</td><td>6</td><td><b>46</b></td></tr><tr><td class="td-ch td-indent">刘老师思维课堂88</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td><td>2</td><td>5</td><td>4</td><td>9</td><td>5</td><td>27</td></tr><tr><td class="td-ch td-indent">小满老师思维课堂</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>7</td><td>0</td><td>7</td></tr><tr><td class="td-ch td-indent">罗老师讲思维（三只咪 ）</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>3</td><td>0</td><td>2</td><td>0</td><td>5</td></tr><tr><td class="td-ch td-indent">浙大奥数张老师</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>4</td><td>0</td><td>4</td></tr><tr><td class="td-ch td-indent">北大奥数珊珊老师1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>2</td></tr><tr><td class="td-ch td-indent">韩老师满分思维课</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td></tr><tr style="background:#d4edda;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#6a1a78;"></span>合肥徽起</td><td>0</td><td>0</td><td>0</td><td>0</td><td>6</td><td>1</td><td>0</td><td>5</td><td>5</td><td>4</td><td>3</td><td>0</td><td><b>24</b></td></tr><tr><td class="td-ch td-indent">初升高入团规划大课堂</td><td>0</td><td>0</td><td>0</td><td>0</td><td>6</td><td>1</td><td>0</td><td>5</td><td>5</td><td>3</td><td>3</td><td>0</td><td>23</td></tr><tr><td class="td-ch td-indent">铁饭碗规划专场</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr><tr style="background:#d4edda;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#00838f;"></span>自然流</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>4</td><td>0</td><td>2</td><td>2</td><td>3</td><td>1</td><td>0</td><td><b>13</b></td></tr><tr><td class="td-ch td-indent">自然流</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>4</td><td>0</td><td>2</td><td>2</td><td>3</td><td>1</td><td>0</td><td>13</td></tr><tr style="background:#d4edda;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#5d4037;"></span>山东深山</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td><td>5</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>8</b></td></tr><tr><td class="td-ch td-indent">徐老师讲升学(欢喜）</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td><td>5</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>8</td></tr><tr style="background:#d4edda;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#1565c0;"></span>文思泉涌</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>0</b></td></tr><tr style="background:#d4edda;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#888;"></span>未知渠道</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>0</b></td></tr><tr class="thead-green" style="font-weight:800;"><td class="td-ch">总计</td><td>1</td><td>0</td><td>1</td><td>0</td><td>99</td><td>245</td><td>140</td><td>226</td><td>348</td><td>327</td><td>357</td><td>204</td><td>1948</td></tr></tbody></table></div></div>
+      <td>0.0%</td>
+    </tr></tbody></table></div></details></div>
+
 <div id="channel-summary" class="section">
-  <h2 class="sec-title">④ 渠道×年级（正常班）</h2>
-  <div class="table-wrap desktop-only"><table><thead><tr class="thead-purple"><th>渠道</th><th>二级渠道</th><th>达人</th><th>初三</th><th>高一</th><th>高二</th><th>合计</th></tr></thead><tbody><tr style="background:#e8d5ff;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#3d1a78;"></span>最小年轮</td><td></td><td></td><td>1079</td><td>157</td><td>75</td><td><b>1311</b></td></tr><tr style="background:#f5f0ff;"><td></td><td class="td-ch" style="color:#5c2d91;font-weight:600;">抖音小店</td><td></td><td>1027</td><td>134</td><td>73</td><td style="font-weight:700;">1234</td></tr><tr><td></td><td></td><td class="td-ch">李老师讲初升高</td><td>428</td><td>1</td><td>0</td><td>429</td></tr><tr><td></td><td></td><td class="td-ch">一线王老师讲选科</td><td>68</td><td>51</td><td>14</td><td>133</td></tr><tr><td></td><td></td><td class="td-ch">郝老师聊选科-行知</td><td>110</td><td>13</td><td>4</td><td>127</td></tr><tr><td></td><td></td><td class="td-ch">刘老师讲中考a</td><td>100</td><td>0</td><td>1</td><td>101</td></tr><tr><td></td><td></td><td class="td-ch">行知老师讲规划</td><td>74</td><td>14</td><td>0</td><td>88</td></tr><tr><td></td><td></td><td class="td-ch">王老师说选科</td><td>72</td><td>8</td><td>0</td><td>80</td></tr><tr><td></td><td></td><td class="td-ch">董老师讲选科</td><td>55</td><td>9</td><td>1</td><td>65</td></tr><tr><td></td><td></td><td class="td-ch">田老师讲选科</td><td>49</td><td>8</td><td>1</td><td>58</td></tr><tr><td></td><td></td><td class="td-ch">孙老师思维课堂-一起考</td><td>1</td><td>8</td><td>30</td><td>39</td></tr><tr><td></td><td></td><td class="td-ch">珊伊老师讲高考</td><td>12</td><td>10</td><td>8</td><td>30</td></tr><tr><td></td><td></td><td class="td-ch">晶晶老师升学规划</td><td>12</td><td>8</td><td>10</td><td>30</td></tr><tr><td></td><td></td><td class="td-ch">千佰惠公司聂老师</td><td>25</td><td>0</td><td>0</td><td>25</td></tr><tr><td></td><td></td><td class="td-ch">黄老师讲选科</td><td>9</td><td>2</td><td>0</td><td>11</td></tr><tr><td></td><td></td><td class="td-ch">超超老师讲选科</td><td>6</td><td>0</td><td>1</td><td>7</td></tr><tr><td></td><td></td><td class="td-ch">金榜题名</td><td>0</td><td>2</td><td>1</td><td>3</td></tr><tr><td></td><td></td><td class="td-ch">中考志愿填报刘老师</td><td>3</td><td>0</td><td>0</td><td>3</td></tr><tr><td></td><td></td><td class="td-ch">郑州中考大实话</td><td>2</td><td>0</td><td>0</td><td>2</td></tr><tr><td></td><td></td><td class="td-ch">刘老师升学规划(升知维)</td><td>0</td><td>0</td><td>2</td><td>2</td></tr><tr><td></td><td></td><td class="td-ch">刘老师讲中考</td><td>1</td><td>0</td><td>0</td><td>1</td></tr><tr style="background:#f5f0ff;"><td></td><td class="td-ch" style="color:#5c2d91;font-weight:600;">视频号小店</td><td></td><td>52</td><td>23</td><td>2</td><td style="font-weight:700;">77</td></tr><tr><td></td><td></td><td class="td-ch">升学规划.田雨</td><td>44</td><td>17</td><td>2</td><td>63</td></tr><tr><td></td><td></td><td class="td-ch">唐老师高考规划</td><td>5</td><td>4</td><td>0</td><td>9</td></tr><tr><td></td><td></td><td class="td-ch">赵老师讲选科</td><td>3</td><td>0</td><td>0</td><td>3</td></tr><tr><td></td><td></td><td class="td-ch">邬老师讲规划</td><td>0</td><td>2</td><td>0</td><td>2</td></tr><tr style="background:#e8d5ff;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#1a6e3d;"></span>领航</td><td></td><td></td><td>215</td><td>104</td><td>75</td><td><b>394</b></td></tr><tr style="background:#f5f0ff;"><td></td><td class="td-ch" style="color:#5c2d91;font-weight:600;">抖音小店</td><td></td><td>205</td><td>101</td><td>61</td><td style="font-weight:700;">367</td></tr><tr><td></td><td></td><td class="td-ch">升学规划雯老师-泓图</td><td>51</td><td>7</td><td>1</td><td>59</td></tr><tr><td></td><td></td><td class="td-ch">陈老师升学规划</td><td>19</td><td>22</td><td>12</td><td>53</td></tr><tr><td></td><td></td><td class="td-ch">刘老师升学规划</td><td>22</td><td>14</td><td>12</td><td>48</td></tr><tr><td></td><td></td><td class="td-ch">高中班主任张老师升学</td><td>17</td><td>17</td><td>10</td><td>44</td></tr><tr><td></td><td></td><td class="td-ch">高中生升学规划</td><td>21</td><td>13</td><td>5</td><td>39</td></tr><tr><td></td><td></td><td class="td-ch">马老师升学规划</td><td>32</td><td>3</td><td>0</td><td>35</td></tr><tr><td></td><td></td><td class="td-ch">升学规划白老师</td><td>6</td><td>11</td><td>12</td><td>29</td></tr><tr><td></td><td></td><td class="td-ch">郑州中考规划</td><td>15</td><td>0</td><td>0</td><td>15</td></tr><tr><td></td><td></td><td class="td-ch">昭昭老师讲升学</td><td>8</td><td>5</td><td>1</td><td>14</td></tr><tr><td></td><td></td><td class="td-ch">小满老师讲选科规划🎓</td><td>9</td><td>1</td><td>1</td><td>11</td></tr><tr><td></td><td></td><td class="td-ch">张利老师聊升学（慧润文化）</td><td>1</td><td>4</td><td>3</td><td>8</td></tr><tr><td></td><td></td><td class="td-ch">王老师聊高考规划</td><td>2</td><td>4</td><td>1</td><td>7</td></tr><tr><td></td><td></td><td class="td-ch">大王老师说郑州升学</td><td>2</td><td>0</td><td>0</td><td>2</td></tr><tr><td></td><td></td><td class="td-ch">宋老师聊升学</td><td>0</td><td>0</td><td>1</td><td>1</td></tr><tr><td></td><td></td><td class="td-ch">高中升学规划</td><td>0</td><td>0</td><td>1</td><td>1</td></tr><tr><td></td><td></td><td class="td-ch">山西升学于老师</td><td>0</td><td>0</td><td>1</td><td>1</td></tr><tr style="background:#f5f0ff;"><td></td><td class="td-ch" style="color:#5c2d91;font-weight:600;">视频号小店</td><td></td><td>10</td><td>3</td><td>14</td><td style="font-weight:700;">27</td></tr><tr><td></td><td></td><td class="td-ch">赵主任讲女生规划</td><td>9</td><td>3</td><td>13</td><td>25</td></tr><tr><td></td><td></td><td class="td-ch">湖南高考老师 985</td><td>1</td><td>0</td><td>1</td><td>2</td></tr><tr style="background:#e8d5ff;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#0d47a1;"></span>格物致知</td><td></td><td></td><td>150</td><td>0</td><td>2</td><td><b>152</b></td></tr><tr style="background:#f5f0ff;"><td></td><td class="td-ch" style="color:#5c2d91;font-weight:600;">抖音小店</td><td></td><td>60</td><td>0</td><td>0</td><td style="font-weight:700;">60</td></tr><tr><td></td><td></td><td class="td-ch">文老师升学规划课堂</td><td>60</td><td>0</td><td>0</td><td>60</td></tr><tr style="background:#f5f0ff;"><td></td><td class="td-ch" style="color:#5c2d91;font-weight:600;">视频号小店</td><td></td><td>90</td><td>0</td><td>2</td><td style="font-weight:700;">92</td></tr><tr><td></td><td></td><td class="td-ch">樊老师读书分享</td><td>90</td><td>0</td><td>2</td><td>92</td></tr><tr style="background:#e8d5ff;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#e65100;"></span>杭州三只咪</td><td></td><td></td><td>45</td><td>0</td><td>1</td><td><b>46</b></td></tr><tr style="background:#f5f0ff;"><td></td><td class="td-ch" style="color:#5c2d91;font-weight:600;">抖音小店</td><td></td><td>12</td><td>0</td><td>0</td><td style="font-weight:700;">12</td></tr><tr><td></td><td></td><td class="td-ch">罗老师讲思维（三只咪 ）</td><td>5</td><td>0</td><td>0</td><td>5</td></tr><tr><td></td><td></td><td class="td-ch">浙大奥数张老师</td><td>4</td><td>0</td><td>0</td><td>4</td></tr><tr><td></td><td></td><td class="td-ch">北大奥数珊珊老师1</td><td>2</td><td>0</td><td>0</td><td>2</td></tr><tr><td></td><td></td><td class="td-ch">小满老师思维课堂</td><td>1</td><td>0</td><td>0</td><td>1</td></tr><tr style="background:#f5f0ff;"><td></td><td class="td-ch" style="color:#5c2d91;font-weight:600;">视频号小店</td><td></td><td>33</td><td>0</td><td>1</td><td style="font-weight:700;">34</td></tr><tr><td></td><td></td><td class="td-ch">刘老师思维课堂88</td><td>26</td><td>0</td><td>1</td><td>27</td></tr><tr><td></td><td></td><td class="td-ch">小满老师思维课堂</td><td>6</td><td>0</td><td>0</td><td>6</td></tr><tr><td></td><td></td><td class="td-ch">韩老师满分思维课</td><td>1</td><td>0</td><td>0</td><td>1</td></tr><tr style="background:#e8d5ff;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#6a1a78;"></span>合肥徽起</td><td></td><td></td><td>10</td><td>8</td><td>6</td><td><b>24</b></td></tr><tr style="background:#f5f0ff;"><td></td><td class="td-ch" style="color:#5c2d91;font-weight:600;">视频号小店</td><td></td><td>10</td><td>8</td><td>6</td><td style="font-weight:700;">24</td></tr><tr><td></td><td></td><td class="td-ch">初升高入团规划大课堂</td><td>10</td><td>8</td><td>5</td><td>23</td></tr><tr><td></td><td></td><td class="td-ch">铁饭碗规划专场</td><td>0</td><td>0</td><td>1</td><td>1</td></tr><tr style="background:#e8d5ff;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#00838f;"></span>自然流</td><td></td><td></td><td>8</td><td>3</td><td>2</td><td><b>13</b></td></tr><tr style="background:#f5f0ff;"><td></td><td class="td-ch" style="color:#5c2d91;font-weight:600;">抖音小店</td><td></td><td>8</td><td>3</td><td>2</td><td style="font-weight:700;">13</td></tr><tr><td></td><td></td><td class="td-ch">自然流</td><td>8</td><td>3</td><td>2</td><td>13</td></tr><tr style="background:#e8d5ff;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#5d4037;"></span>山东深山</td><td></td><td></td><td>8</td><td>0</td><td>0</td><td><b>8</b></td></tr><tr style="background:#f5f0ff;"><td></td><td class="td-ch" style="color:#5c2d91;font-weight:600;">抖音小店</td><td></td><td>8</td><td>0</td><td>0</td><td style="font-weight:700;">8</td></tr><tr><td></td><td></td><td class="td-ch">徐老师讲升学(欢喜）</td><td>8</td><td>0</td><td>0</td><td>8</td></tr><tr style="background:#e8d5ff;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#1565c0;"></span>文思泉涌</td><td></td><td></td><td>0</td><td>0</td><td>0</td><td><b>0</b></td></tr><tr style="background:#e8d5ff;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#888;"></span>未知渠道</td><td></td><td></td><td>0</td><td>0</td><td>0</td><td><b>0</b></td></tr><tr class="thead-purple" style="font-weight:800;"><td class="td-ch">总计</td><td></td><td></td><td>1515</td><td>272</td><td>161</td><td>1948</td></tr></tbody></table></div><div class="table-wrap mobile-only"><table><thead><tr class="thead-purple"><th style="text-align:left;padding-left:8px;">渠道/二级渠道/达人</th><th>初三</th><th>高一</th><th>高二</th><th>合计</th></tr></thead><tbody><tr style="background:#e8d5ff;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#3d1a78;"></span>最小年轮</td><td>1079</td><td>157</td><td>75</td><td><b>1311</b></td></tr><tr style="background:#f5f0ff;"><td class="td-ch" style="padding-left:14px!important;color:#5c2d91;font-weight:600;">└ 抖音小店</td><td>1027</td><td>134</td><td>73</td><td style="font-weight:700;">1234</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 李老师讲初升高</td><td>428</td><td>1</td><td>0</td><td>429</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 一线王老师讲选科</td><td>68</td><td>51</td><td>14</td><td>133</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 郝老师聊选科-行知</td><td>110</td><td>13</td><td>4</td><td>127</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 刘老师讲中考a</td><td>100</td><td>0</td><td>1</td><td>101</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 行知老师讲规划</td><td>74</td><td>14</td><td>0</td><td>88</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 王老师说选科</td><td>72</td><td>8</td><td>0</td><td>80</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 董老师讲选科</td><td>55</td><td>9</td><td>1</td><td>65</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 田老师讲选科</td><td>49</td><td>8</td><td>1</td><td>58</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 孙老师思维课堂-一起考</td><td>1</td><td>8</td><td>30</td><td>39</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 珊伊老师讲高考</td><td>12</td><td>10</td><td>8</td><td>30</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 晶晶老师升学规划</td><td>12</td><td>8</td><td>10</td><td>30</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 千佰惠公司聂老师</td><td>25</td><td>0</td><td>0</td><td>25</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 黄老师讲选科</td><td>9</td><td>2</td><td>0</td><td>11</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 超超老师讲选科</td><td>6</td><td>0</td><td>1</td><td>7</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 金榜题名</td><td>0</td><td>2</td><td>1</td><td>3</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 中考志愿填报刘老师</td><td>3</td><td>0</td><td>0</td><td>3</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 郑州中考大实话</td><td>2</td><td>0</td><td>0</td><td>2</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 刘老师升学规划(升知维)</td><td>0</td><td>0</td><td>2</td><td>2</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 刘老师讲中考</td><td>1</td><td>0</td><td>0</td><td>1</td></tr><tr style="background:#f5f0ff;"><td class="td-ch" style="padding-left:14px!important;color:#5c2d91;font-weight:600;">└ 视频号小店</td><td>52</td><td>23</td><td>2</td><td style="font-weight:700;">77</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 升学规划.田雨</td><td>44</td><td>17</td><td>2</td><td>63</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 唐老师高考规划</td><td>5</td><td>4</td><td>0</td><td>9</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 赵老师讲选科</td><td>3</td><td>0</td><td>0</td><td>3</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 邬老师讲规划</td><td>0</td><td>2</td><td>0</td><td>2</td></tr><tr style="background:#e8d5ff;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#1a6e3d;"></span>领航</td><td>215</td><td>104</td><td>75</td><td><b>394</b></td></tr><tr style="background:#f5f0ff;"><td class="td-ch" style="padding-left:14px!important;color:#5c2d91;font-weight:600;">└ 抖音小店</td><td>205</td><td>101</td><td>61</td><td style="font-weight:700;">367</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 升学规划雯老师-泓图</td><td>51</td><td>7</td><td>1</td><td>59</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 陈老师升学规划</td><td>19</td><td>22</td><td>12</td><td>53</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 刘老师升学规划</td><td>22</td><td>14</td><td>12</td><td>48</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 高中班主任张老师升学</td><td>17</td><td>17</td><td>10</td><td>44</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 高中生升学规划</td><td>21</td><td>13</td><td>5</td><td>39</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 马老师升学规划</td><td>32</td><td>3</td><td>0</td><td>35</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 升学规划白老师</td><td>6</td><td>11</td><td>12</td><td>29</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 郑州中考规划</td><td>15</td><td>0</td><td>0</td><td>15</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 昭昭老师讲升学</td><td>8</td><td>5</td><td>1</td><td>14</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 小满老师讲选科规划🎓</td><td>9</td><td>1</td><td>1</td><td>11</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 张利老师聊升学（慧润文化）</td><td>1</td><td>4</td><td>3</td><td>8</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 王老师聊高考规划</td><td>2</td><td>4</td><td>1</td><td>7</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 大王老师说郑州升学</td><td>2</td><td>0</td><td>0</td><td>2</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 宋老师聊升学</td><td>0</td><td>0</td><td>1</td><td>1</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 高中升学规划</td><td>0</td><td>0</td><td>1</td><td>1</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 山西升学于老师</td><td>0</td><td>0</td><td>1</td><td>1</td></tr><tr style="background:#f5f0ff;"><td class="td-ch" style="padding-left:14px!important;color:#5c2d91;font-weight:600;">└ 视频号小店</td><td>10</td><td>3</td><td>14</td><td style="font-weight:700;">27</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 赵主任讲女生规划</td><td>9</td><td>3</td><td>13</td><td>25</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 湖南高考老师 985</td><td>1</td><td>0</td><td>1</td><td>2</td></tr><tr style="background:#e8d5ff;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#0d47a1;"></span>格物致知</td><td>150</td><td>0</td><td>2</td><td><b>152</b></td></tr><tr style="background:#f5f0ff;"><td class="td-ch" style="padding-left:14px!important;color:#5c2d91;font-weight:600;">└ 抖音小店</td><td>60</td><td>0</td><td>0</td><td style="font-weight:700;">60</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 文老师升学规划课堂</td><td>60</td><td>0</td><td>0</td><td>60</td></tr><tr style="background:#f5f0ff;"><td class="td-ch" style="padding-left:14px!important;color:#5c2d91;font-weight:600;">└ 视频号小店</td><td>90</td><td>0</td><td>2</td><td style="font-weight:700;">92</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 樊老师读书分享</td><td>90</td><td>0</td><td>2</td><td>92</td></tr><tr style="background:#e8d5ff;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#e65100;"></span>杭州三只咪</td><td>45</td><td>0</td><td>1</td><td><b>46</b></td></tr><tr style="background:#f5f0ff;"><td class="td-ch" style="padding-left:14px!important;color:#5c2d91;font-weight:600;">└ 抖音小店</td><td>12</td><td>0</td><td>0</td><td style="font-weight:700;">12</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 罗老师讲思维（三只咪 ）</td><td>5</td><td>0</td><td>0</td><td>5</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 浙大奥数张老师</td><td>4</td><td>0</td><td>0</td><td>4</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 北大奥数珊珊老师1</td><td>2</td><td>0</td><td>0</td><td>2</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 小满老师思维课堂</td><td>1</td><td>0</td><td>0</td><td>1</td></tr><tr style="background:#f5f0ff;"><td class="td-ch" style="padding-left:14px!important;color:#5c2d91;font-weight:600;">└ 视频号小店</td><td>33</td><td>0</td><td>1</td><td style="font-weight:700;">34</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 刘老师思维课堂88</td><td>26</td><td>0</td><td>1</td><td>27</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 小满老师思维课堂</td><td>6</td><td>0</td><td>0</td><td>6</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 韩老师满分思维课</td><td>1</td><td>0</td><td>0</td><td>1</td></tr><tr style="background:#e8d5ff;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#6a1a78;"></span>合肥徽起</td><td>10</td><td>8</td><td>6</td><td><b>24</b></td></tr><tr style="background:#f5f0ff;"><td class="td-ch" style="padding-left:14px!important;color:#5c2d91;font-weight:600;">└ 视频号小店</td><td>10</td><td>8</td><td>6</td><td style="font-weight:700;">24</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 初升高入团规划大课堂</td><td>10</td><td>8</td><td>5</td><td>23</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 铁饭碗规划专场</td><td>0</td><td>0</td><td>1</td><td>1</td></tr><tr style="background:#e8d5ff;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#00838f;"></span>自然流</td><td>8</td><td>3</td><td>2</td><td><b>13</b></td></tr><tr style="background:#f5f0ff;"><td class="td-ch" style="padding-left:14px!important;color:#5c2d91;font-weight:600;">└ 抖音小店</td><td>8</td><td>3</td><td>2</td><td style="font-weight:700;">13</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 自然流</td><td>8</td><td>3</td><td>2</td><td>13</td></tr><tr style="background:#e8d5ff;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#5d4037;"></span>山东深山</td><td>8</td><td>0</td><td>0</td><td><b>8</b></td></tr><tr style="background:#f5f0ff;"><td class="td-ch" style="padding-left:14px!important;color:#5c2d91;font-weight:600;">└ 抖音小店</td><td>8</td><td>0</td><td>0</td><td style="font-weight:700;">8</td></tr><tr><td class="td-ch" style="padding-left:22px!important;color:#555;">· 徐老师讲升学(欢喜）</td><td>8</td><td>0</td><td>0</td><td>8</td></tr><tr style="background:#e8d5ff;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#1565c0;"></span>文思泉涌</td><td>0</td><td>0</td><td>0</td><td><b>0</b></td></tr><tr style="background:#e8d5ff;font-weight:700;"><td class="td-ch"><span class="ch-dot" style="background:#888;"></span>未知渠道</td><td>0</td><td>0</td><td>0</td><td><b>0</b></td></tr><tr class="thead-purple" style="font-weight:800;"><td class="td-ch">总计</td><td>1515</td><td>272</td><td>161</td><td>1948</td></tr></tbody></table></div>
-</div>
-</body></html>
+  <h2 class="sec-title">② 渠道数据汇总（正常班）</h2>
+  <div class="tip">仅统计正常班订单，按渠道 / 达人 / 年级下钻</div>
+  <div class="table-wrap"><table>
+    <thead><tr class="thead-purple">
+      <th>直播号代理</th><th>达人名称</th>
+      <th>初三(9)</th><th>高一(10)</th><th>高二(11)</th><th>合计</th>
+    </tr></thead>
+    <tbody><tr style="background:#e8d5ff;font-weight:700;">
+    <td style="padding:9px 14px;text-align:left;"><span class="ch-dot" style="background:#3d1a78;"></span>最小年轮</td>
+    <td></td>
+    <td>978</td><td>181</td><td>66</td>
+    <td style="font-weight:800;">1225</td>
+  </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">李老师讲初升高</td>
+      <td>405</td><td>2</td><td>5</td>
+      <td>412</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">一线王老师讲选科</td>
+      <td>94</td><td>80</td><td>9</td>
+      <td>183</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">郝老师聊选科-行知</td>
+      <td>97</td><td>20</td><td>4</td>
+      <td>121</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">行知老师讲规划</td>
+      <td>74</td><td>17</td><td>1</td>
+      <td>92</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">千佰惠公司聂老师</td>
+      <td>83</td><td>4</td><td>0</td>
+      <td>87</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">王老师说选科</td>
+      <td>60</td><td>8</td><td>0</td>
+      <td>68</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">田老师讲选科</td>
+      <td>52</td><td>10</td><td>1</td>
+      <td>63</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">董老师讲选科</td>
+      <td>56</td><td>5</td><td>0</td>
+      <td>61</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">晶晶老师升学规划</td>
+      <td>14</td><td>11</td><td>12</td>
+      <td>37</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">珊伊老师讲高考</td>
+      <td>12</td><td>16</td><td>8</td>
+      <td>36</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">孙老师思维课堂-一起考</td>
+      <td>0</td><td>8</td><td>21</td>
+      <td>29</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">蔡稳稳</td>
+      <td>28</td><td>0</td><td>0</td>
+      <td>28</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">高阶三规划</td>
+      <td>0</td><td>0</td><td>5</td>
+      <td>5</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">许老师清北思维</td>
+      <td>1</td><td>0</td><td>0</td>
+      <td>1</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">升学规划成丰袁老师</td>
+      <td>1</td><td>0</td><td>0</td>
+      <td>1</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">赵老师讲选科</td>
+      <td>1</td><td>0</td><td>0</td>
+      <td>1</td>
+    </tr><tr style="background:#e8d5ff;font-weight:700;">
+    <td style="padding:9px 14px;text-align:left;"><span class="ch-dot" style="background:#888;"></span>兜底代理</td>
+    <td></td>
+    <td>883</td><td>72</td><td>41</td>
+    <td style="font-weight:800;">996</td>
+  </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">樊老师读书分享</td>
+      <td>226</td><td>1</td><td>4</td>
+      <td>231</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">刘老师讲中考a</td>
+      <td>129</td><td>0</td><td>2</td>
+      <td>131</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">文老师升学规划课堂</td>
+      <td>113</td><td>0</td><td>0</td>
+      <td>113</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">刘主任升学问答（哔哒教育）</td>
+      <td>110</td><td>0</td><td>0</td>
+      <td>110</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">未知达人</td>
+      <td>58</td><td>8</td><td>3</td>
+      <td>69</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">升学规划.田雨</td>
+      <td>47</td><td>18</td><td>2</td>
+      <td>67</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">步步高就-聊聊初升高</td>
+      <td>62</td><td>0</td><td>1</td>
+      <td>63</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">刘老师思维课堂88</td>
+      <td>45</td><td>1</td><td>1</td>
+      <td>47</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">赵主任讲女生规划</td>
+      <td>10</td><td>20</td><td>14</td>
+      <td>44</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">刘老师升学规划</td>
+      <td>10</td><td>15</td><td>12</td>
+      <td>37</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">初升高升学规划</td>
+      <td>16</td><td>0</td><td>0</td>
+      <td>16</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">初升高升学规划.</td>
+      <td>11</td><td>0</td><td>0</td>
+      <td>11</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">黄老师讲选科</td>
+      <td>7</td><td>2</td><td>0</td>
+      <td>9</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">小满老师思维课堂</td>
+      <td>8</td><td>0</td><td>0</td>
+      <td>8</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">张老师高考规划</td>
+      <td>2</td><td>5</td><td>0</td>
+      <td>7</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">宁老师讲选科</td>
+      <td>6</td><td>1</td><td>0</td>
+      <td>7</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">昭昭老师讲升学</td>
+      <td>3</td><td>0</td><td>1</td>
+      <td>4</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">浙大奥数张老师</td>
+      <td>4</td><td>0</td><td>0</td>
+      <td>4</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">罗老师讲思维（三只咪 ）</td>
+      <td>2</td><td>0</td><td>1</td>
+      <td>3</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">超超老师讲选科</td>
+      <td>3</td><td>0</td><td>0</td>
+      <td>3</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">浙大奥数莉莉老师</td>
+      <td>2</td><td>0</td><td>0</td>
+      <td>2</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">北大奥数珊珊老师1</td>
+      <td>2</td><td>0</td><td>0</td>
+      <td>2</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">韩老师满分思维课</td>
+      <td>2</td><td>0</td><td>0</td>
+      <td>2</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">姗姗老师1129</td>
+      <td>1</td><td>0</td><td>0</td>
+      <td>1</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">数学许老师</td>
+      <td>1</td><td>0</td><td>0</td>
+      <td>1</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">浙大奥数陈老师</td>
+      <td>1</td><td>0</td><td>0</td>
+      <td>1</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">刘老师讲中考</td>
+      <td>1</td><td>0</td><td>0</td>
+      <td>1</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">宋老师思维学习力</td>
+      <td>0</td><td>1</td><td>0</td>
+      <td>1</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">魏老师思维课堂999</td>
+      <td>1</td><td>0</td><td>0</td>
+      <td>1</td>
+    </tr><tr style="background:#e8d5ff;font-weight:700;">
+    <td style="padding:9px 14px;text-align:left;"><span class="ch-dot" style="background:#1a6e3d;"></span>领航</td>
+    <td></td>
+    <td>154</td><td>83</td><td>31</td>
+    <td style="font-weight:800;">268</td>
+  </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">升学规划雯老师-泓图</td>
+      <td>65</td><td>14</td><td>4</td>
+      <td>83</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">马老师升学规划</td>
+      <td>42</td><td>9</td><td>0</td>
+      <td>51</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">陈老师升学规划</td>
+      <td>16</td><td>22</td><td>7</td>
+      <td>45</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">高中班主任张老师升学</td>
+      <td>14</td><td>16</td><td>6</td>
+      <td>36</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">高中生升学规划</td>
+      <td>8</td><td>11</td><td>3</td>
+      <td>22</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">升学规划白老师</td>
+      <td>2</td><td>8</td><td>6</td>
+      <td>16</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">小满老师讲选科规划🎓</td>
+      <td>7</td><td>3</td><td>2</td>
+      <td>12</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">高中升学规划</td>
+      <td>0</td><td>0</td><td>1</td>
+      <td>1</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">山西升学于老师</td>
+      <td>0</td><td>0</td><td>1</td>
+      <td>1</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">付老师生涯规划</td>
+      <td>0</td><td>0</td><td>1</td>
+      <td>1</td>
+    </tr><tr style="background:#e8d5ff;font-weight:700;">
+    <td style="padding:9px 14px;text-align:left;"><span class="ch-dot" style="background:#6a1a78;"></span>合肥徽起</td>
+    <td></td>
+    <td>6</td><td>4</td><td>5</td>
+    <td style="font-weight:800;">15</td>
+  </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">初升高入团规划大课堂</td>
+      <td>6</td><td>4</td><td>4</td>
+      <td>14</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">铁饭碗规划专场</td>
+      <td>0</td><td>0</td><td>1</td>
+      <td>1</td>
+    </tr><tr class="thead-purple" style="font-weight:800;">
+  <td style="padding:10px 14px;text-align:left;">总计</td><td></td>
+  <td>2021</td><td>340</td><td>143</td>
+  <td>2504</td>
+</tr></tbody></table></div></div>
+
+<div id="channel-date" class="section">
+  <h2 class="sec-title">③ 分渠道 × 分日期（全部订单）</h2>
+  <div class="table-wrap"><table>
+    <thead><tr class="thead-green">
+      <th>直播号代理</th><th>达人名称</th>
+      <th>05-02</th><th>05-03</th><th>05-04</th><th>05-05</th><th>05-06</th><th>05-07</th><th>05-08</th>
+      <th>合计</th>
+    </tr></thead>
+    <tbody><tr style="background:#d4edda;font-weight:700;">
+    <td style="padding:9px 14px;text-align:left;"><span class="ch-dot" style="background:#3d1a78;"></span>最小年轮</td>
+    <td></td><td>257</td><td>204</td><td>178</td><td>104</td><td>176</td><td>183</td><td>187</td><td style="font-weight:800;">1289</td>
+  </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">李老师讲初升高</td>
+      <td>109</td><td>74</td><td>72</td><td>0</td><td>60</td><td>53</td><td>65</td><td>433</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">一线王老师讲选科</td>
+      <td>26</td><td>24</td><td>26</td><td>25</td><td>33</td><td>25</td><td>27</td><td>186</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">郝老师聊选科-行知</td>
+      <td>21</td><td>40</td><td>20</td><td>12</td><td>12</td><td>6</td><td>18</td><td>129</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">行知老师讲规划</td>
+      <td>22</td><td>13</td><td>15</td><td>19</td><td>12</td><td>6</td><td>12</td><td>99</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">千佰惠公司聂老师</td>
+      <td>0</td><td>0</td><td>0</td><td>0</td><td>25</td><td>45</td><td>23</td><td>93</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">王老师说选科</td>
+      <td>29</td><td>14</td><td>8</td><td>13</td><td>6</td><td>2</td><td>0</td><td>72</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">田老师讲选科</td>
+      <td>16</td><td>3</td><td>15</td><td>11</td><td>4</td><td>0</td><td>17</td><td>66</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">董老师讲选科</td>
+      <td>9</td><td>10</td><td>9</td><td>11</td><td>9</td><td>0</td><td>14</td><td>62</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">晶晶老师升学规划</td>
+      <td>5</td><td>6</td><td>6</td><td>6</td><td>6</td><td>6</td><td>5</td><td>40</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">珊伊老师讲高考</td>
+      <td>5</td><td>5</td><td>7</td><td>6</td><td>6</td><td>5</td><td>5</td><td>39</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">孙老师思维课堂-一起考</td>
+      <td>15</td><td>15</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>30</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">蔡稳稳</td>
+      <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>29</td><td>0</td><td>29</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">高阶三规划</td>
+      <td>0</td><td>0</td><td>0</td><td>1</td><td>2</td><td>2</td><td>0</td><td>5</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">赵老师讲选科</td>
+      <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>4</td><td>0</td><td>4</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">许老师清北思维</td>
+      <td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">升学规划成丰袁老师</td>
+      <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td>
+    </tr><tr style="background:#d4edda;font-weight:700;">
+    <td style="padding:9px 14px;text-align:left;"><span class="ch-dot" style="background:#888;"></span>兜底代理</td>
+    <td></td><td>106</td><td>98</td><td>170</td><td>180</td><td>70</td><td>202</td><td>260</td><td style="font-weight:800;">1086</td>
+  </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">樊老师读书分享</td>
+      <td>0</td><td>17</td><td>77</td><td>50</td><td>30</td><td>40</td><td>25</td><td>239</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">刘老师讲中考a</td>
+      <td>38</td><td>31</td><td>17</td><td>4</td><td>6</td><td>18</td><td>27</td><td>141</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">文老师升学规划课堂</td>
+      <td>0</td><td>11</td><td>20</td><td>33</td><td>0</td><td>34</td><td>20</td><td>118</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">刘主任升学问答（哔哒教育）</td>
+      <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>56</td><td>60</td><td>116</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">未知达人</td>
+      <td>21</td><td>11</td><td>2</td><td>38</td><td>1</td><td>9</td><td>6</td><td>88</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">升学规划.田雨</td>
+      <td>16</td><td>13</td><td>12</td><td>15</td><td>0</td><td>7</td><td>8</td><td>71</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">步步高就-聊聊初升高</td>
+      <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>67</td><td>67</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">刘老师升学规划</td>
+      <td>15</td><td>9</td><td>12</td><td>9</td><td>11</td><td>0</td><td>0</td><td>56</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">刘老师思维课堂88</td>
+      <td>7</td><td>4</td><td>9</td><td>10</td><td>7</td><td>7</td><td>6</td><td>50</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">赵主任讲女生规划</td>
+      <td>0</td><td>0</td><td>0</td><td>16</td><td>11</td><td>15</td><td>4</td><td>46</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">初升高升学规划</td>
+      <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>8</td><td>12</td><td>20</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">初升高升学规划.</td>
+      <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>12</td><td>12</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">小满老师思维课堂</td>
+      <td>0</td><td>0</td><td>10</td><td>0</td><td>0</td><td>1</td><td>0</td><td>11</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">黄老师讲选科</td>
+      <td>6</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>9</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">宁老师讲选科</td>
+      <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>4</td><td>4</td><td>8</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">张老师高考规划</td>
+      <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>7</td><td>7</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">昭昭老师讲升学</td>
+      <td>0</td><td>1</td><td>3</td><td>0</td><td>0</td><td>0</td><td>0</td><td>4</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">浙大奥数张老师</td>
+      <td>0</td><td>0</td><td>4</td><td>0</td><td>0</td><td>0</td><td>0</td><td>4</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">罗老师讲思维（三只咪 ）</td>
+      <td>0</td><td>0</td><td>2</td><td>0</td><td>0</td><td>0</td><td>1</td><td>3</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">超超老师讲选科</td>
+      <td>0</td><td>0</td><td>0</td><td>2</td><td>1</td><td>0</td><td>0</td><td>3</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">浙大奥数莉莉老师</td>
+      <td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>2</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">北大奥数珊珊老师1</td>
+      <td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>2</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">韩老师满分思维课</td>
+      <td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>2</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">宋老师思维学习力</td>
+      <td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>2</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">姗姗老师1129</td>
+      <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">数学许老师</td>
+      <td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">浙大奥数陈老师</td>
+      <td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">刘老师讲中考</td>
+      <td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">魏老师思维课堂999</td>
+      <td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td>
+    </tr><tr style="background:#d4edda;font-weight:700;">
+    <td style="padding:9px 14px;text-align:left;"><span class="ch-dot" style="background:#1a6e3d;"></span>领航</td>
+    <td></td><td>64</td><td>55</td><td>46</td><td>72</td><td>44</td><td>27</td><td>23</td><td style="font-weight:800;">331</td>
+  </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">升学规划雯老师-泓图</td>
+      <td>11</td><td>15</td><td>10</td><td>17</td><td>4</td><td>13</td><td>16</td><td>86</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">高中班主任张老师升学</td>
+      <td>14</td><td>13</td><td>9</td><td>10</td><td>9</td><td>0</td><td>0</td><td>55</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">马老师升学规划</td>
+      <td>5</td><td>5</td><td>4</td><td>12</td><td>7</td><td>14</td><td>6</td><td>53</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">高中生升学规划</td>
+      <td>13</td><td>11</td><td>11</td><td>7</td><td>9</td><td>0</td><td>0</td><td>51</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">陈老师升学规划</td>
+      <td>10</td><td>10</td><td>10</td><td>11</td><td>8</td><td>0</td><td>0</td><td>49</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">升学规划白老师</td>
+      <td>10</td><td>0</td><td>0</td><td>12</td><td>0</td><td>0</td><td>0</td><td>22</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">小满老师讲选科规划🎓</td>
+      <td>1</td><td>0</td><td>1</td><td>3</td><td>6</td><td>0</td><td>1</td><td>12</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">高中升学规划</td>
+      <td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">山西升学于老师</td>
+      <td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">付老师生涯规划</td>
+      <td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td>
+    </tr><tr style="background:#d4edda;font-weight:700;">
+    <td style="padding:9px 14px;text-align:left;"><span class="ch-dot" style="background:#6a1a78;"></span>合肥徽起</td>
+    <td></td><td>5</td><td>4</td><td>3</td><td>0</td><td>3</td><td>0</td><td>0</td><td style="font-weight:800;">15</td>
+  </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">初升高入团规划大课堂</td>
+      <td>5</td><td>3</td><td>3</td><td>0</td><td>3</td><td>0</td><td>0</td><td>14</td>
+    </tr><tr>
+      <td></td>
+      <td style="padding:7px 14px;text-align:left;">铁饭碗规划专场</td>
+      <td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td>
+    </tr><tr class="thead-green" style="font-weight:800;">
+  <td style="padding:10px 14px;text-align:left;">总计</td><td></td><td>432</td><td>361</td><td>397</td><td>356</td><td>293</td><td>412</td><td>470</td><td>2721</td>
+</tr></tbody></table></div></div>
+
+<div id="grade" class="section">
+  <h2 class="sec-title">④ 分年级进量（全部订单）</h2>
+  <div class="table-wrap"><table>
+    <thead><tr class="thead-blue">
+      <th>年级</th>
+      <th>05-02</th><th>05-03</th><th>05-04</th><th>05-05</th><th>05-06</th><th>05-07</th><th>05-08</th>
+      <th>合计</th><th>占比</th>
+    </tr></thead>
+    <tbody><tr>
+    <td style="padding:10px 14px;text-align:left;font-weight:600;">初三(升高一)</td>
+    <td>321</td><td>254</td><td>323</td><td>268</td><td>214</td><td>348</td><td>418</td>
+    <td style="font-weight:700;">2146</td>
+    <td>78.9%</td>
+  </tr><tr>
+    <td style="padding:10px 14px;text-align:left;font-weight:600;">高一(升高二)</td>
+    <td>78</td><td>69</td><td>55</td><td>60</td><td>61</td><td>44</td><td>40</td>
+    <td style="font-weight:700;">407</td>
+    <td>15.0%</td>
+  </tr><tr>
+    <td style="padding:10px 14px;text-align:left;font-weight:600;">高二(升高三)</td>
+    <td>31</td><td>33</td><td>14</td><td>28</td><td>18</td><td>19</td><td>10</td>
+    <td style="font-weight:700;">153</td>
+    <td>5.6%</td>
+  </tr><tr class="thead-blue" style="font-weight:800;">
+  <td style="padding:10px 14px;text-align:left;">总计</td><td>432</td><td>361</td><td>397</td><td>356</td><td>293</td><td>412</td><td>470</td>
+  <td>2721</td><td>100%</td>
+</tr></tbody></table></div></div>
+</body>
+</html>
